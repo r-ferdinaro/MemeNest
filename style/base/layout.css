@@ -4,6 +4,10 @@
     grid-template-columns: minmax(1rem, 1fr) minmax(auto, 95%) minmax(1rem, 1fr);
 }
 
+.app.main-layout {
+    grid-template-rows: auto 1fr;
+}
+
 .main-layout > * {
     grid-column: 2;
 }
@@ -14,4 +18,12 @@
 
 .main-layout.align-center {
     align-items: center;
+}
+
+.main-content {
+    grid-row: 2;
+}
+
+.editor-layout {
+    grid-template-columns: repeat(2, 1fr);
 }
