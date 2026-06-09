@@ -1,0 +1,15 @@
+:root {
+    /* Text colors */
+    
+
+    /* Background colors */
+    
+    
+    /* Dimensions */
+    --options-gap: .625em;
+    --margin: 1.25em;
+    
+    /* Timing */
+    --transition-duration: .3s;
+    
+}

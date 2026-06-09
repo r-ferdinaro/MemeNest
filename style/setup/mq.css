@@ -1,0 +1,109 @@
+/* Mobile & Small only */
+@media (max-width: 759px) {
+    :root {
+        --clr-screen: #6060607d;
+        --menu--transition-duration: .6s;
+    }
+
+    .expand {
+        display: none;
+    }
+
+    .nav-btn,
+    .filter-btn {
+        display: block;
+    }
+    
+    .main-screen {
+        position: fixed;
+        inset: 0;
+
+        background-color: var(--clr-screen);
+
+        cursor: pointer;
+        transition: opacity var(--menu--transition-duration) ease-in-out;
+    }
+
+    .main-nav,
+    .tags-container {
+        z-index: 2;
+        position: fixed;
+        inset: 0 0 auto auto;
+        
+        height: 100vh;
+        min-width: 200px;
+
+        border-inline-start: 1px solid black;
+        background-color: white;
+
+        transform: translateX(100%);
+        transition: transform 0.6s;
+    }
+
+    body.menu-open.nav .main-nav,
+    body.menu-open.filter .tags-container {
+        transform: translateX(0);
+    }
+
+    .main-nav > ul,
+    .tags-container {
+        display: grid;
+        grid-auto-flow: row;
+        align-content: start;
+        justify-content: stretch;
+    }
+    
+    .main-nav > ul > li:hover,
+    .tags-container > a:hover{
+        background-color: #f0f0f0;
+    }
+    
+    .main-nav > ul > li > a {
+        width: 100%;
+        padding: 0;
+    }
+
+    .filter-section {
+        grid-template-columns: 1fr max-content 1fr;
+    }
+}
+
+/* Small */
+@media (min-width: 430px) {
+    .gallery-content {
+        column-width: 100px;
+        column-gap: 10px;
+        
+        margin-bottom: 10px;
+    }
+}
+
+/* Medium */
+@media (min-width: 460px) {
+    .gallery-content {
+        column-width: 130px;
+        column-gap: 15px;
+        
+        margin-bottom: 15px;
+    }
+}
+
+/* Large */
+@media (min-width: 760px) {
+    .gallery-content {
+        column-width: 170px;
+        column-gap: 20px;
+        
+        margin-bottom: 20px;
+    }
+}
+
+/* XLarge */
+@media (min-width: 1220px) {
+    .gallery-content {
+        column-width: 210px;
+        column-gap: 25px;
+        
+        margin-bottom: 25px;
+    }
+}

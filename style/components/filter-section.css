@@ -1,0 +1,42 @@
+.filter-section {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 300px max-content 1fr minmax(200px, 400px) max-content;
+    gap: var(--options-gap);
+
+    margin-block: var(--margin);
+}
+
+.search-bar {
+    border-radius: 10px;
+}
+
+.tags-container {
+    grid-column: 4;
+    justify-self: end;
+
+    display: grid;
+    grid-auto-flow: column;
+    gap: var(--options-gap);
+
+    text-align: center;
+}
+
+.expand {
+    grid-column: 5;
+}
+
+.filter-btn {
+    display: none;
+    justify-self: end;
+    
+    width: max-content;
+    
+    border: none;
+    background-color: transparent;
+    
+    font-size: larger;
+    color: black;
+    
+    cursor: pointer;
+}

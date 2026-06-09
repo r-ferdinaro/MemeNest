@@ -1,0 +1,50 @@
+.main-nav {
+    justify-self: end;
+}
+
+.main-nav, .main-nav * {
+    height: 100%;
+}
+
+.main-nav > ul {
+    grid-auto-flow: column;
+    align-items: center;
+    gap: var(--options-gap);
+}
+
+.main-nav > ul a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    padding-inline: 1em;
+
+    color: black;
+}
+
+.main-nav > ul > li:last-child a {
+    padding-inline-end: 0;
+}
+
+.main-screen {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.app.menu-open .main-screen {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nav-btn {
+    display: none;
+    justify-self: end;
+    width: max-content;
+    border: none;
+    background-color: transparent;
+    font-size: larger;
+    color: black;
+    cursor: pointer;
+}

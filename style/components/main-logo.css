@@ -1,0 +1,9 @@
+.main-logo {
+    width: max-content;
+
+    font-family: InstrumentSans, serif;
+    font-size: 2.5em;
+    padding: .5rem 0;
+
+    cursor: pointer;
+}

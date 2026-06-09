@@ -1,0 +1,17 @@
+.main-layout {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: minmax(1rem, 1fr) minmax(auto, 95%) minmax(1rem, 1fr);
+}
+
+.main-layout > * {
+    grid-column: 2;
+}
+
+.main-layout > *.full {
+    grid-column: 1 / -1;
+}
+
+.main-layout.align-center {
+    align-items: center;
+}

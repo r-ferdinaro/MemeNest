@@ -1,0 +1,8 @@
+.main-header {
+    grid-row: 1;
+    display: grid;
+}
+
+.main-header > * {
+    grid-row: 1;
+}

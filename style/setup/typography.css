@@ -1,0 +1,11 @@
+/* INTER */
+@font-face {
+    font-family: Inter;
+    src: url("../fonts/Inter/Inter-Regular.ttf");
+}
+
+/* England Joined */
+@font-face {
+    font-family: InstrumentSans;
+    src: url("../fonts/InstrumentSans/InstrumentSans-Regular.ttf");
+}

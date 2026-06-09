@@ -1,0 +1,17 @@
+.gallery-content {
+    column-width: 150px;
+    column-gap: 20px;
+         
+    width: 100%;
+
+    margin-bottom: 20px;
+}
+
+.gallery-content img {
+    break-inside: avoid; 
+    
+    width: 100%;
+    
+    margin-bottom: var(--margin);
+    border-radius: 10px;
+}

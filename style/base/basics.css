@@ -1,0 +1,44 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Inter-Regular, sans-serif;
+}
+
+body {    
+    margin: 0;
+
+    font-size: 1rem;
+    line-height: 1.25;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 1em;
+}
+
+ul {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    
+    list-style-type: none;
+}
+
+.btn, button {
+    border-radius: 10px;
+}
