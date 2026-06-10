@@ -7,7 +7,7 @@
     <title>MemeNest</title>
 </head>
 <body class="app main-layout" onload="onInit()">
-    <div class="main-screen" onclick="onCloseMenus()"></div>
+    <div class="main-screen" onclick="onCloseMenu()"></div>
 
     <header class="main-header main-layout full align-center">
         <div class="main-logo">MemeNest</div>
@@ -21,16 +21,44 @@
         </nav>
         <button class="nav-btn" onclick="onToggleMenu(this)"><i class="fa-solid fa-bars"></i></button>
     </header>
-    <main class="main-content-container main-layout full"></main>
+    
+    <main class="main-content-container main-layout full">
+        <section class="gallery">
+            <div class="filter-section">
+                <input name="photos-search" class="search-bar" type="text" oninput="OnSetSearchFilter(this)">
+                <button class="btn search-bar-reset" onclick="onClearSearchFilter(this)">Clear filters</button>
+                    <div class="tags-container">
+                        <a href="#" value="happy" onclick="onTagFilter(this)">happy</a>
+                        <a href="#" value="sad" onclick="onTagFilter(this)">sad</a>
+                        <a href="#" value="trump" onclick="onTagFilter(this)">trump</a>
+                        <a href="#" value="putin" onclick="onTagFilter(this)">putin</a>
+                    </div>
+                    <button class="expand">More</button>
+                    <button class="filter-btn" onclick="onToggleMenu(this)" type="button"><i class="fa-solid fa-sliders"></i></button>
+            </div>
+            <div class="gallery-content"></div>
+        </section>
+
+        <section class="editor">
+            <div class="canvas-area">
+                <div class="canvas-container">
+                    <canvas height="300"></canvas>
+                </div>
+            </div>
+            <div class="canvas-tools"></div>
+        </section>
+
+        <section class="about">
+            <p>this is a test</p>
+        </section>
+    </main>
 
     <script src="https://kit.fontawesome.com/ed34b9feb9.js" crossorigin="anonymous"></script>
     <script src="js/utils/utils.service.js"></script>
     <script src="js/storage/storage.service.js"></script>
     <script src="js/canvas/canvas.controller.js"></script>
     <script src="js/canvas/canvas.service.js"></script>
-    <script src="js/images/image.service.js"></script>
+    <script src="js/items/items.service.js"></script>
     <script src="js/page/page.controller.js"></script>
-    <script src="js/page/page.service.js"></script>
-    <script src="js/gallery/gallery-controller.js"></script>
 </body>
 </html>
