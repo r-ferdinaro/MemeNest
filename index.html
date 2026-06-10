@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/styles.css">
+    <title>MemeNest</title>
+</head>
+<body class="app main-layout" onload="onInit()">
+    <div class="main-screen" onclick="onCloseMenus()"></div>
+
+    <header class="main-header main-layout full align-center">
+        <div class="main-logo">MemeNest</div>
+        <nav class="main-nav">
+            <ul class="grid">
+                <li><a onclick="onPageChange(event)" href="" data-uri="gallery">Gallery</a></li>
+                <li><a onclick="onPageChange(event)" href="" data-uri="editor">Editor</a></li>
+                <li><a onclick="onPageChange(event)" href="" data-uri="memes">Memes</a></li>
+                <li><a onclick="onPageChange(event)" href="" data-uri="about">About</a></li>
+            </ul>
+        </nav>
+        <button class="nav-btn" onclick="onToggleMenu(this)"><i class="fa-solid fa-bars"></i></button>
+    </header>
+    <main class="main-content-container main-layout full"></main>
+
+    <script src="https://kit.fontawesome.com/ed34b9feb9.js" crossorigin="anonymous"></script>
+    <script src="js/gallery/gallery-controller.js"></script>
+</body>
+</html>

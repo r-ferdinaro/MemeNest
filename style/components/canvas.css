@@ -1,0 +1,21 @@
+.editor {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+}
+
+.canvas-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.canvas-container {
+    width: 90%;
+}
+
+canvas {
+    width: 100%;
+    
+    border: 1px solid lightgray;
+    background-color: white;
+}

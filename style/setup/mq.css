@@ -1,19 +1,12 @@
 /* Mobile & Small only */
 @media (max-width: 759px) {
+    /* specific variables */
     :root {
         --clr-screen: #6060607d;
         --menu--transition-duration: .6s;
     }
 
-    .expand {
-        display: none;
-    }
-
-    .nav-btn,
-    .filter-btn {
-        display: block;
-    }
-    
+    /* Page & Gallery */
     .main-screen {
         position: fixed;
         inset: 0;
@@ -62,9 +55,25 @@
         width: 100%;
         padding: 0;
     }
+    
+    .nav-btn,
+    .filter-btn {
+        display: block;
+    }
+
+    /* Gallery */
+    .expand {
+        display: none;
+    }
 
     .filter-section {
         grid-template-columns: 1fr max-content 1fr;
+    }
+    
+    /* Editor */
+    .editor {
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: 1fr;
     }
 }
 
@@ -105,5 +114,9 @@
         column-gap: 25px;
         
         margin-bottom: 25px;
+    }
+
+    .editor {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
