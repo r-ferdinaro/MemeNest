@@ -1,20 +1,18 @@
 'use strict';
 
-// Detect window resize and adjust canvas dimensions accordingly
-function resizeCanvas() {
-    const elContainer = document.querySelector('.canvas-container')
-	gElCanvas.width = elContainer.clientWidth
+// TODO: verify this is the object format that I want
+// TODO: decide when to init a new fresh object with or without selectedImgId, and when to load an existing meme from memeStorage (if has memeId)
+function setMeme() {
+    gMeme = {
+	    // mode: "", //Resmbles fill or outline via values 'fill' and 'stroke'
+	    fillColor: "#000000", //hex color value
+        outlineColor: "#000000", //hex color value
+	    shape: "line", // 'line, square, circle, text...' //should later add support for text
+	    size: 1
+    }
 }
-
-function clearCanvas() {
-    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-}
-
-function resetCanvasObj() {
-    gCanvas = {}
-}
-
-function resetBrushObj() {
+// TODO: verify this is the object format that I want
+function setBrush() {
     gBrush = {
 	    // mode: "", //Resmbles fill or outline via values 'fill' and 'stroke'
 	    fillColor: "#000000", //hex color value
@@ -22,6 +20,12 @@ function resetBrushObj() {
 	    shape: "line", // 'line, square, circle, text...' //should later add support for text
 	    size: 1
     }
+}
+
+// Detect window resize and adjust canvas dimensions accordingly
+function resizeCanvas() {
+    const elContainer = document.querySelector('.canvas-container')
+	gElCanvas.width = elContainer.clientWidth
 }
 
 // Get event positions on Web & Mobile
@@ -45,6 +49,7 @@ function getEvPos(ev) {
     }
 }
 
+// TODO: support drawing stickers
 // send to correct draw function
 function draw(pos) {
 	switch (gBrush.shape) {
