@@ -1,8 +1,13 @@
 'use strict';
 
-const gQueryParams = {
+let gQueryParams = {
     page: '',
     filterBy: ''
+}
+let gSelectedItem = {
+    itemId: '', 
+    itemType: '',
+    elImg: null
 }
 
 // Page rendering functions
@@ -18,29 +23,17 @@ function renderPageContent() {
     const pages = ['gallery', 'editor', 'about']
     const activePage = ['gallery', 'memes'].includes(page) ? 'gallery' : page
 
-    // Hide show sections, based on the selected page using the hide class
+    // hide/show sections, based on the selected page using the hide class
     pages.forEach( page => document.querySelector(`.${page}`).classList.toggle('hide', page !== activePage))
 
     // Render gallery content based on gallery type
     if (['gallery', 'memes'].includes(page)) {
-        document.querySelector('.gallery-content').innerHTML = getGalleryContent()
+        document.querySelector('.gallery-content').innerHTML = getGalleryElements()
     }
     
     // Initialize Editor
     if (page === 'editor') onEditorInit()
-}
-
-// Get images/memes from storage to img tags
-// TODO: support memes
-function getGalleryContent() {
-    const { page, filterBy } = gQueryParams
-    const contentArray = getItems(page, filterBy)
-    let strHtml = ``
-    
-    if (contentArray) {
-        contentArray.forEach( img => strHtml += `<img data-idx="${img.id}" src="${img.url}">`)
-    }
-    return strHtml
+    else removeResizeListeners()
 }
 
 // change page based on nav click
@@ -49,6 +42,26 @@ function onPageChange(ev) {
     onCloseMenu()
 
     gQueryParams.page = ev.target.dataset.uri
+    setQueryParams()
+    renderPageContent()
+}
+
+// click on image/meme to open it in the editor
+function onRenderGalleryItem(el = null) {
+    if (!el || !['gallery', 'memes'].includes(gQueryParams.page)) return
+    
+    // Get the id & type of triggered item
+    gSelectedItem = {
+        itemId: el.dataset.id,    
+        itemType: (gQueryParams.page === 'gallery') ? 'image' : 'meme',
+        elImg: null
+    }
+
+    // update queryParams to editor & update the meme's selectedImageId
+    gQueryParams.page = 'editor'
+    gQueryParams.filterBy = ''
+
+    // render updated URL & editor with selected item & its type
     setQueryParams()
     renderPageContent()
 }

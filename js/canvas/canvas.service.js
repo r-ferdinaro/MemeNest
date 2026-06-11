@@ -1,17 +1,23 @@
 'use strict';
 
 // router to call correct function when loading canvas
-function renderMeme(type = null, id = null) {
-    if (!type) {
-        loadImage()
-    } else if (type = 'image') {
-        loadImage(id)
-    } else {loadMeme()}
+function loadItem() {
+    const { itemType, itemId,} = gSelectedItem
+    // const itemId = gSelectedItem.itemId
+    // const itemType = gSelectedItem.itemType
+
+    // TODO: Might want to load a sample (first) image if !itemId
+    if (itemType === 'image' || (!itemId && !itemType)) {
+        loadImage(itemType, itemId)
+    } else {
+        loadMeme(itemType, itemId)
+    }
 }
 
 // load existing saved meme into canvas
 // Don't override data if exists and user didn't specifically chose to do so
-function loadMeme(id) {
+// TODO: probably incorrect - review again once I want to support loading memes
+function loadMeme(itemType, itemId) {
     if (gMeme?.id === id) return
 
     gMeme = getItemById('meme', id)
@@ -21,25 +27,42 @@ function loadMeme(id) {
 // load image or blank page to canvas
 // Don't override data if exists and user didn't specifically chose to do so
 // Note: I allow blank canvases on init - but it's just an edge case. I could also load a sample image
-function loadImage(id = null) {
-    const shouldReset = (gMeme.selectedImgId == null && !gMeme.drawings.length)
-
-    if (id) {
-        if (gMeme?.selectedImgId === id) return
+function loadImage(itemType, itemId) {
+    if (itemId) {
+        if (gMeme.selectedImgId === itemId) return
         
-        resetMeme(id)
+        const imageObj = getItemById(itemType, itemId)
+        
+        resetMeme(itemId)
         resetBrush()
-    } else if (shouldReset) {
+        renderItemToCanvas(imageObj)
+    } else {
+        const shouldReset = (!gMeme.selectedImgId && !gMeme.drawings.length)
+       
+        if (!shouldReset) return
         resetMeme()
         resetBrush()
     }
+    
+}
+
+function renderItemToCanvas(imageObj) {
+    const img = new Image();
+    
+    img.onload = () => {      
+        gSelectedItem.elImg = img
+        
+        gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+    }
+    img.src = `${imageObj.url}`
 }
 
 // Reset gMeme object
 function resetMeme(imageId) {
     gMeme = {
-        id: null,
-        selectedImgId: imageId || null,
+        id: '',
+        selectedImgId: imageId || '',
         selectedDrawIdx: null,
         drawings: []
     }
@@ -63,7 +86,16 @@ function resetBrush() {
 // Detect window resize and adjust canvas dimensions accordingly
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')
-	gElCanvas.width = elContainer.clientWidth
+    const { elImg } = gSelectedItem
+	
+    gElCanvas.width = elContainer.offsetWidth
+
+    if (elImg) {
+        gElCanvas.height = (elImg.naturalHeight / elImg.naturalWidth) * gElCanvas.width
+        gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
+    } else {
+        gElCanvas.height = elContainer.offsetWidth
+    }
 }
 
 // Get event positions on Web & Mobile
