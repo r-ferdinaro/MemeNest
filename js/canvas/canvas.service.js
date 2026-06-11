@@ -1,26 +1,64 @@
 'use strict';
 
-// TODO: verify this is the object format that I want
-// TODO: decide when to init a new fresh object with or without selectedImgId, and when to load an existing meme from memeStorage (if has memeId)
-function setMeme() {
+// router to call correct function when loading canvas
+function renderMeme(type = null, id = null) {
+    if (!type) {
+        loadImage()
+    } else if (type = 'image') {
+        loadImage(id)
+    } else {loadMeme()}
+}
+
+// load existing saved meme into canvas
+// Don't override data if exists and user didn't specifically chose to do so
+function loadMeme(id) {
+    if (gMeme?.id === id) return
+
+    gMeme = getItemById('meme', id)
+    resetBrush()
+}
+
+// load image or blank page to canvas
+// Don't override data if exists and user didn't specifically chose to do so
+// Note: I allow blank canvases on init - but it's just an edge case. I could also load a sample image
+function loadImage(id = null) {
+    const shouldReset = (gMeme.selectedImgId == null && !gMeme.drawings.length)
+
+    if (id) {
+        if (gMeme?.selectedImgId === id) return
+        
+        resetMeme(id)
+        resetBrush()
+    } else if (shouldReset) {
+        resetMeme()
+        resetBrush()
+    }
+}
+
+// Reset gMeme object
+function resetMeme(imageId) {
     gMeme = {
-	    // mode: "", //Resmbles fill or outline via values 'fill' and 'stroke'
-	    fillColor: "#000000", //hex color value
-        outlineColor: "#000000", //hex color value
-	    shape: "line", // 'line, square, circle, text...' //should later add support for text
-	    size: 1
+        id: null,
+        selectedImgId: imageId || null,
+        selectedDrawIdx: null,
+        drawings: []
     }
 }
-// TODO: verify this is the object format that I want
-function setBrush() {
+
+// Reset brush object
+function resetBrush() {
+    // TODO: Add support for different shapes - text, sticker
     gBrush = {
-	    // mode: "", //Resmbles fill or outline via values 'fill' and 'stroke'
-	    fillColor: "#000000", //hex color value
-        outlineColor: "#000000", //hex color value
-	    shape: "line", // 'line, square, circle, text...' //should later add support for text
+        isFill: false,
+        isOutline: false,  
+	    fillColor: '#000000',
+        outlineColor: '#000000',
+	    shape: 'line',
 	    size: 1
     }
 }
+
+// TODO: add functions that will edit the brush
 
 // Detect window resize and adjust canvas dimensions accordingly
 function resizeCanvas() {

@@ -30,9 +30,7 @@ function onEditorInit() {
 
     resizeCanvas()
     addEventListeners()
-
-    // resetBrush()
-    setMeme()
+    renderMeme()
 }
 
 // Register necessary event listeners
