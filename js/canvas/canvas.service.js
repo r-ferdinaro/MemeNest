@@ -227,4 +227,47 @@ function addText() {
 }
 
 // get latest drawing's positions
+function getDrawingIdxAtPos(pos) {
+    const idx = gMeme.drawings.findIndex( drawing => {
+        // get drawing's positions
+        const { x, y, width, height } = getDrawingBorders(drawing)
+
+        // check if cursor is pointing in the dimensions of the drawing
+        return (
+            pos.x >= x &&
+            pos.x <= x + width &&
+            pos.y >= y &&
+            pos.y <= y + height
+        )
+    })
+
+    // return drawing position or null if no match was found
+    return (idx !== -1) ? idx : null
+}
+
+// reorder modified drawing to top of the drawings array 
+function bringDrawingToFront(idx) {
+    const [ drawing ] = gMeme.drawings.splice(idx, 1)
+
+    // move drawing to top of array and return its index (0)
+    gMeme.drawings.unshift(drawing)
+    return 0
+}
+
+// update brush and selected drawing text
+function setSelectedDrawingText(txt) {
+    const { drawings, selectedDrawingIdx: idx } = gMeme
+    gBrush.txt = txt
+
+    if (idx === null) return
+    drawings[idx].txt = txt
+}
+
+// select/deselect drawing by and sync brush text
+function selectDrawing(idx) {
+    const { drawings } = gMeme
+
+    gMeme.selectedDrawingIdx = idx
+    gBrush.txt = (idx === null) ? '' : drawings[idx].txt
+}
 }
