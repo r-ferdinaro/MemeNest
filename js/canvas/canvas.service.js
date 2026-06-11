@@ -57,7 +57,7 @@ function renderItemToCanvas(imageObj) {
         gSelectedItem.elImg = img
         
         gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
-        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+        renderMeme()
     }
     img.src = `${imageObj.url}`
 }
@@ -98,6 +98,7 @@ function resizeCanvas() {
     } else {
         gElCanvas.height = elCanvasContainer.offsetWidth
     }
+renderMeme()
 }
 
 // Get event positions on Web & Mobile
@@ -121,19 +122,25 @@ function getEvPos(ev) {
     }
 }
 
-// TODO: support drawing stickers
-// send to correct draw function
-function draw(pos) {
-	switch (gBrush.shape) {
-		case 'line':
-			drawLine(pos)
-			break
-        case 'circle':
-            drawArc(pos)
-            break
-        case 'square':
-            drawRect(pos)
-			break
+// render meme's image and drawings to canvas
+function renderMeme() {
+    const { drawings, selectedDrawingIdx } = gMeme
+    const { width, height } = gElCanvas
+    const { elImg } = gSelectedItem
+
+    // Clear canvas
+    gCtx.clearRect(0, 0, width, height)
+
+    // draw selected item's image if one has been assigned
+    if (elImg) {
+        gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
+    }
+
+    // render drawings in reverse so index 0 renders on top
+    for (let idx = drawings.length - 1; idx >= 0; idx--) {
+        drawText(drawings[idx])
+        // check if current drawing should be highlighted
+        if (idx === selectedDrawingIdx) highlightDrawing(drawings[idx])
 	}
 }
 
