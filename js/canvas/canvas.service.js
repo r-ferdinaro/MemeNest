@@ -63,21 +63,22 @@ function resetMeme(imageId) {
     gMeme = {
         id: '',
         selectedImgId: imageId || '',
-        selectedDrawIdx: null,
+        selectedDrawingIdx: null,
         drawings: []
     }
 }
 
 // Reset brush object
 function resetBrush() {
-    // TODO: Add support for different shapes - text, sticker
+    // TODO: add support for sticker shape and selected sticker.
+    // TODO: update brush based on user definitions
     gBrush = {
-        isFill: false,
-        isOutline: false,  
-	    fillColor: '#000000',
-        outlineColor: '#000000',
-	    shape: 'line',
-	    size: 1
+        txt: '',
+        fontSize: 30,
+        font: 'helvetica',
+        fillColor: '#ffffff',
+        strokeColor: '#000000',
+        shape: 'text'
     }
 }
 
