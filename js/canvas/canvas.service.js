@@ -2,12 +2,16 @@
 
 // router to call correct function when loading canvas
 function loadItem() {
-    const { itemType, itemId,} = gSelectedItem
-    // const itemId = gSelectedItem.itemId
-    // const itemType = gSelectedItem.itemType
+    let { itemType, itemId,} = gSelectedItem
+    
+    if (!itemType && !itemId) {
+        gSelectedItem.itemType = itemType = 'image'
+        gSelectedItem.itemId = itemId = getItems('gallery')[0].id
+    }
 
     // TODO: Might want to load a sample (first) image if !itemId
-    if (itemType === 'image' || (!itemId && !itemType)) {
+    if (itemType === 'image') {
+
         loadImage(itemType, itemId)
     } else {
         loadMeme(itemType, itemId)
@@ -82,20 +86,17 @@ function resetBrush() {
     }
 }
 
-// TODO: add functions that will edit the brush
-
 // Detect window resize and adjust canvas dimensions accordingly
 function resizeCanvas() {
-    const elContainer = document.querySelector('.canvas-container')
+    const elCanvasContainer = document.querySelector('.canvas-container')
     const { elImg } = gSelectedItem
 	
-    gElCanvas.width = elContainer.offsetWidth
+    gElCanvas.width = elCanvasContainer.offsetWidth
 
     if (elImg) {
         gElCanvas.height = (elImg.naturalHeight / elImg.naturalWidth) * gElCanvas.width
-        gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
     } else {
-        gElCanvas.height = elContainer.offsetWidth
+        gElCanvas.height = elCanvasContainer.offsetWidth
     }
 }
 
