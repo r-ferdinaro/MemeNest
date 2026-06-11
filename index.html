@@ -23,7 +23,7 @@
     </header>
     
     <main class="main-content-container main-layout full">
-        <section class="gallery">
+        <section class="gallery hide">
             <div class="filter-section">
                 <input name="photos-search" class="search-bar" type="text" oninput="OnSetSearchFilter(this)">
                 <button class="btn search-bar-reset" onclick="onClearSearchFilter(this)">Clear filters</button>
@@ -39,7 +39,7 @@
             <div class="gallery-content"></div>
         </section>
 
-        <section class="editor">
+        <section class="editor hide">
             <div class="canvas-area">
                 <div class="canvas-container">
                     <canvas height="300"></canvas>
@@ -48,7 +48,7 @@
             <div class="canvas-tools"></div>
         </section>
 
-        <section class="about">
+        <section class="about hide">
             <p>this is a test</p>
         </section>
     </main>
