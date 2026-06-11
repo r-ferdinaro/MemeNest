@@ -115,6 +115,11 @@
     .canvas-container {
         width: 70%;
     }
+
+    .canvas-tools {
+        width: 70%;
+        margin-inline: auto;
+    }
 }
 
 /* Large */
@@ -123,13 +128,21 @@
     .gallery-content {
         column-width: 170px;
         column-gap: 20px;
-        
+
         margin-bottom: 20px;
     }
 
     /* Editor */
     .editor {
-        grid-template-rows: 1fr;
+        grid-template-rows: 1fr auto 1fr;
+    }
+
+    .canvas-area {
+        grid-row: 2;
+    }
+
+    .canvas-tools {
+        grid-row: 2;
     }
 
     .canvas-container {
@@ -149,7 +162,7 @@
     .gallery-content {
         column-width: 210px;
         column-gap: 25px;
-        
+
         margin-bottom: 25px;
     }
 
@@ -164,5 +177,11 @@
 
     .canvas-tools {
         grid-column: 4;
+    }
+}
+
+@media (min-width: 1220px) and (max-width: 1333px) {
+    .editor {
+        grid-template-columns: auto minmax(0, 550px) auto minmax(0, 550px) auto;
     }
 }

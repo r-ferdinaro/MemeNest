@@ -37,6 +37,19 @@ ul {
     list-style-type: none;
 }
 
-.btn, button {
-    border-radius: 10px;
+button, .btn {
+    width: max-content;
+    
+    border: none;
+    background-color: transparent;
+    
+    font-size: larger;
+    color: black;
+    
+    cursor: pointer;
+}
+
+[class^="fa-"], [class*=" fa-"] {
+    height: 100%;
+    /* font-size: 1.5rem !important; */
 }
