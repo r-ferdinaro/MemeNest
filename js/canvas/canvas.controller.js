@@ -4,7 +4,13 @@
 let gElCanvas
 let gCtx
 
-let gMeme
+// TODO: should save to localStorage in case user refreshes page ??
+let gMeme = {
+    id: null,
+    selectedImgId: null,
+    selectedDrawIdx: null,
+    drawings: []
+}
 let gBrush
 
 let gStartPos

@@ -15,7 +15,7 @@ function getItems(page, searchFilter) {
     const keywordsArr = searchFilter.trim().toLowerCase().split(/\s+/);
     
     return dataSource.filter(obj => {
-        if (!obj.keywords) return false;
+        if (!obj.keywords) return false
         return keywordsArr.every(searchStr => {
             return obj.keywords.some(keyword =>
                 keyword.toLowerCase().includes(searchStr)
