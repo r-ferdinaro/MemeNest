@@ -155,32 +155,31 @@ function drawText(drawing) {
 }
 
 // highlight border around selected drawing
-}
 
-function drawArc(pos) {
-    const { x, y } = pos
-    const { fillColor, mode, size } = gBrush
+// add drawing based on brush configuration
+function addText() {
+    const { txt, fontSize, font, fillColor, strokeColor } = gBrush
+    const { width, height } = gElCanvas
+    const text = txt.trim() || 'Text'
+
+    // set drawing's middle position
+    const x = width / 2
+    const y = height / 2
     
-    gCtx.fillStyle = gCtx.strokeStyle = fillColor
-    gCtx.lineWidth = 1
-	gCtx.beginPath()
-
-	gCtx.arc(x, y, size, 0, 2 * Math.PI)
-	mode === 'fill' ? gCtx.fill() : gCtx.stroke()
+    // set drawing properties
+    const drawing = {
+        txt: text,
+        size: fontSize,
+        font,
+        fillColor,
+        strokeColor,
+        pos: {x, y}
+    }
+    // store drawing data to gMeme at the front (top of the z-order)
+    // set drawing to be selected drawing
+    gMeme.drawings.unshift(drawing)
+    gMeme.selectedDrawingIdx = 0
 }
 
-function drawRect(pos) {
-    const { x, y } = pos
-    const { fillColor, mode, size } = gBrush
-
-	gCtx.fillStyle = gCtx.strokeStyle = fillColor
-	gCtx.lineWidth = 1
-	
-    gCtx.beginPath()
-
-    if (mode === 'fill') {
-        gCtx.fillRect(x, y, size, size)
-    } else {
-        gCtx.strokeRect(x, y, size, size)
-    }
+// get latest drawing's positions
 }
