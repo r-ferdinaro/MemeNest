@@ -34,11 +34,11 @@ function addEventListeners() {
     window.addEventListener('resize', onResizeCanvas)
 
     gElCanvas.addEventListener('mousedown', onDown)
-	gElCanvas.addEventListener('mousemove', onDraw)
+	gElCanvas.addEventListener('mousemove', onMove)
 	gElCanvas.addEventListener('mouseup', onUp)
 
     gElCanvas.addEventListener('touchstart', onDown)
-	gElCanvas.addEventListener('touchmove', onDraw)
+	gElCanvas.addEventListener('touchmove', onMove)
 	gElCanvas.addEventListener('touchend', onUp)
 }
 
@@ -51,21 +51,39 @@ function onResizeCanvas() {
 }
 
 function onDown(ev) {
+    const pos = getEvPos(ev)
+    let idx = getDrawingIdxAtPos(pos)
+
+    // move selected drawing to top of the list
+    // update offset position 
+    if (idx !== null) {
+        idx = bringDrawingToFront(idx)
+        const { pos: drawingPos } = gMeme.drawings[idx]
+        
+        const x = pos.x - drawingPos.x
+        const y = pos.y - drawingPos.y
+
+        gOffsetPos = {x,y}
     gIsMouseDown = true
-    
-    gStartPos = getEvPos(ev)
-    onDraw(ev)
+    }
+
+    selectDrawing(idx)
+    document.querySelector('.text-input').value = gBrush.txt
+    renderMeme()
 }
 
-function onDraw(ev) {
-	if (!gIsMouseDown) return
-    
+// drag drawing and store it's original positions
+function onMove(ev) {
+    if (!gIsMouseDown || gMeme.selectedDrawingIdx === null) return
+    const { x: offsetX, y: offsetY} = gOffsetPos
     const pos = getEvPos(ev)
-	draw(pos)
-	gStartPos = pos
+    const x = pos.x - offsetX
+    const y = pos.y - offsetY
+
+    moveSelectedDrawing({x, y})
+    renderMeme()
 }
 
 function onUp() {
 	gIsMouseDown = false
-    gCtx.closePath()
 }

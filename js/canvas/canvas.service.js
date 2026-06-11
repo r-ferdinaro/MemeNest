@@ -52,10 +52,10 @@ function loadImage(itemType, itemId) {
 
 function renderItemToCanvas(imageObj) {
     const img = new Image();
-    
-    img.onload = () => {      
+
+    img.onload = () => {
         gSelectedItem.elImg = img
-        
+
         gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
         renderMeme()
     }
@@ -90,7 +90,7 @@ function resetBrush() {
 function resizeCanvas() {
     const elCanvasContainer = document.querySelector('.canvas-container')
     const { elImg } = gSelectedItem
-	
+
     gElCanvas.width = elCanvasContainer.offsetWidth
 
     if (elImg) {
@@ -98,7 +98,7 @@ function resizeCanvas() {
     } else {
         gElCanvas.height = elCanvasContainer.offsetWidth
     }
-renderMeme()
+    renderMeme()
 }
 
 // Get event positions on Web & Mobile
@@ -141,7 +141,7 @@ function renderMeme() {
         drawText(drawings[idx])
         // check if current drawing should be highlighted
         if (idx === selectedDrawingIdx) highlightDrawing(drawings[idx])
-	}
+    }
 }
 
 // draw a drawing into canvas
@@ -176,7 +176,6 @@ function highlightDrawing(drawing) {
     // reset line properties to none
     gCtx.setLineDash([])
 }
-
 // get drawing start and end positions (x and y)
 function getDrawingBorders(drawing) {
     const { txt, size, font, pos } = drawing
