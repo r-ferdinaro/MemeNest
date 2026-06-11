@@ -270,4 +270,11 @@ function selectDrawing(idx) {
     gMeme.selectedDrawingIdx = idx
     gBrush.txt = (idx === null) ? '' : drawings[idx].txt
 }
+
+// update drawing's position
+function moveSelectedDrawing(pos) {
+    const idx = gMeme.selectedDrawingIdx
+    if (idx === null) return
+
+    gMeme.drawings[idx].pos = pos
 }
