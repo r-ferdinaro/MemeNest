@@ -27,6 +27,7 @@ function onEditorInit() {
     resizeCanvas()
     addEventListeners()
     loadItem()
+    renderBrushProperties()
 }
 
 // Register necessary event listeners
@@ -62,7 +63,42 @@ function onSetText(el) {
 }
 
 function onUpdateFontSize(el) {
-    document.querySelector('.fontSizeValue').innerText = el.value
+    updateBrush('fontSize', +el.value)
+    document.querySelector('.font-size-value').innerText = el.value
+    renderMeme()
+}
+
+function onRemoveText() {
+    removeDrawing()
+    renderBrushProperties()
+    renderMeme()
+}
+
+function onFontChange(el) {
+    updateBrush('font', el.value)
+    renderMeme()
+}
+
+function onSetFontColor(el) {
+    updateBrush('fillColor', el.value)
+    renderMeme()
+}
+
+function onSetStrokeColor(el) {
+    updateBrush('strokeColor', el.value)
+    renderMeme()
+}
+
+function renderBrushProperties() {
+    const {font, fillColor, fontSize, strokeColor, txt} = gBrush
+    const elCanvasTools = document.querySelector('.canvas-tools')
+    
+    elCanvasTools.querySelector('.text-input').value = txt
+    elCanvasTools.querySelector('#text-font').value = font
+    elCanvasTools.querySelector('.font-size-slider').value = fontSize
+    elCanvasTools.querySelector('.font-size-value').innerText = fontSize
+    elCanvasTools.querySelector('.stroke-color').value = strokeColor
+    elCanvasTools.querySelector('.fill-color').value = fillColor
 }
 
 // select/deselect drawing per cursor position
@@ -84,7 +120,7 @@ function onDown(ev) {
     }
 
     selectDrawing(idx)
-    document.querySelector('.text-input').value = gBrush.txt
+    renderBrushProperties()
     renderMeme()
 }
 
