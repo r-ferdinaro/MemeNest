@@ -48,7 +48,7 @@ function saveMeme() {
 // function uploadImg(url, keywords) {
 //     // TODO: add a property to gImgs to differ between local/uploaded images. 
 //     // If local image - grab from files | if uploaded image - save to localStorage as dataURL.
-//     // Will require getGalleryContent to convert the dataURL to an image and insert into img element properly. 
+//     // Will require getGalleryElements to convert the dataURL to an image and insert into img element properly. 
 //     const img = _createImg(url, keywords)
     
 //     gImgs.unshift(img)

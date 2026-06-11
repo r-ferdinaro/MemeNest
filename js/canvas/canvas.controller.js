@@ -30,7 +30,7 @@ function onEditorInit() {
 
     resizeCanvas()
     addEventListeners()
-    renderMeme()
+    loadItem()
 }
 
 // Register necessary event listeners
@@ -44,6 +44,10 @@ function addEventListeners() {
     gElCanvas.addEventListener('touchstart', onDown)
 	gElCanvas.addEventListener('touchmove', onDraw)
 	gElCanvas.addEventListener('touchend', onUp)
+}
+
+function removeResizeListeners() {
+    window.removeEventListener('resize', onResizeCanvas)
 }
 
 function onResizeCanvas() {

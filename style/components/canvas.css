@@ -1,6 +1,7 @@
 .editor {
     display: grid;
     grid-template-columns: 1.2fr .8fr;
+    height: 100%;
 }
 
 .canvas-area {
@@ -10,12 +11,14 @@
 }
 
 .canvas-container {
-    width: 90%;
+    width: 100%;
+
+    margin: 1em;
 }
 
 canvas {
     width: 100%;
-    
+
     border: 1px solid lightgray;
     background-color: white;
 }
