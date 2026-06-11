@@ -14,26 +14,20 @@ function onInit() {
 }
 
 function renderPageContent() {
-    const { page } = gQueryParams
-    // const elContainer = document.querySelector('.main-content-container')
-    
+    const { page = 'gallery' } = gQueryParams
+    const pages = ['gallery', 'editor', 'about']
+    const activePage = ['gallery', 'memes'].includes(page) ? 'gallery' : page
+
+    // Hide show sections, based on the selected page using the hide class
+    pages.forEach( page => document.querySelector(`.${page}`).classList.toggle('hide', page !== activePage))
+
+    // Render gallery content based on gallery type
     if (['gallery', 'memes'].includes(page)) {
-        const galleryContent = getGalleryContent()
-        
-        document.querySelector('.gallery-content').innerHTML = galleryContent
-        document.querySelector('.gallery').classList.remove('hide')
-        document.querySelector('.editor').classList.add('hide')
-        document.querySelector('.about').classList.add('hide')
-    } else if (page === 'editor') {
-        document.querySelector('.editor').classList.remove('hide')
-        document.querySelector('.gallery').classList.add('hide')
-        document.querySelector('.about').classList.add('hide')
-        onEditorInit()
-    } else {
-        document.querySelector('.about').classList.remove('hide')
-        document.querySelector('.gallery').classList.add('hide')
-        document.querySelector('.editor').classList.add('hide')
+        document.querySelector('.gallery-content').innerHTML = getGalleryContent()
     }
+    
+    // Initialize Editor
+    if (page === 'editor') onEditorInit()
 }
 
 // Get images/memes from storage to img tags
@@ -52,6 +46,7 @@ function getGalleryContent() {
 // change page based on nav click
 function onPageChange(ev) {
     ev.preventDefault()
+    onCloseMenu()
 
     gQueryParams.page = ev.target.dataset.uri
     setQueryParams()
