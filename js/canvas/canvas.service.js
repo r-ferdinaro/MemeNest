@@ -155,6 +155,44 @@ function drawText(drawing) {
 }
 
 // highlight border around selected drawing
+function highlightDrawing(drawing) {
+    const { x, y, width, height } = getDrawingBorders(drawing)
+
+    // set highlight properties
+    gCtx.strokeStyle = '#0099ff'
+    gCtx.lineWidth = 2
+
+    // draw highlighting border
+    gCtx.setLineDash([6, 4])
+    gCtx.strokeRect(x, y, width, height)
+
+    // reset line properties to none
+    gCtx.setLineDash([])
+}
+
+// get drawing start and end positions (x and y)
+function getDrawingBorders(drawing) {
+    const { txt, size, font, pos } = drawing
+    const extraPadding = 5
+
+    // set drawing font to canvas
+    // calculate drawing's width based on text, size and font 
+    gCtx.font = `${size}px ${font}`
+    const measuredWidth = gCtx.measureText(txt).width
+
+    // set start & end positions
+    const x = pos.x - (measuredWidth / 2) - extraPadding
+    const y = pos.y - (size / 2) - extraPadding
+    const width = measuredWidth + (extraPadding * 2)
+    const height = size + (extraPadding * 2)
+
+    return {
+        x,
+        y,
+        width,
+        height
+    }
+}
 
 // add drawing based on brush configuration
 function addText() {
