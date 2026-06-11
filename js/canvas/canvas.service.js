@@ -32,16 +32,24 @@ function loadMeme(itemType, itemId) {
 // Don't override data if exists and user didn't specifically chose to do so
 // Note: I allow blank canvases on init - but it's just an edge case. I could also load a sample image
 function loadImage(itemType, itemId) {
+    const { drawings, selectedImgId } = gMeme
+    const { elImg } = gSelectedItem
+
     if (itemId) {
-        if (gMeme.selectedImgId === itemId) return
-        
         const imageObj = getItemById(itemType, itemId)
-        
+
+        if (selectedImgId === itemId) {
+            if (elImg) return
+            // re-render image to canvas
+            renderItemToCanvas(imageObj)
+            return
+        }
+
         resetMeme(itemId)
         resetBrush()
         renderItemToCanvas(imageObj)
     } else {
-        const shouldReset = (!gMeme.selectedImgId && !gMeme.drawings.length)
+        const shouldReset = (!selectedImgId && !drawings.length)
        
         if (!shouldReset) return
         resetMeme()
