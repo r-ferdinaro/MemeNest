@@ -12,8 +12,6 @@
 
 .canvas-container {
     width: 100%;
-
-    margin: 1em;
 }
 
 canvas {
@@ -21,4 +19,36 @@ canvas {
 
     border: 1px solid lightgray;
     background-color: white;
+}
+
+.canvas-tools {
+    grid-auto-flow: column;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(15, 1fr);
+
+    border: 1px solid black;
+}
+
+.canvas-tools > * {
+    grid-column: 1 / -1;
+    
+    display: grid;
+    grid-template-columns: subgrid;
+}
+
+.canvas-tools * {
+    align-items: center;
+    justify-items: center;
+}
+
+.text-tools > *, .export-container > * {
+    grid-column: span 5;
+}
+
+.text-styling > * {
+    grid-column: span 3;
+}
+
+.stickers-container > * {
+    grid-column: 1 / -1;
 }

@@ -29,14 +29,4 @@
 .filter-btn {
     display: none;
     justify-self: end;
-    
-    width: max-content;
-    
-    border: none;
-    background-color: transparent;
-    
-    font-size: larger;
-    color: black;
-    
-    cursor: pointer;
 }
