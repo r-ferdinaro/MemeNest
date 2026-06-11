@@ -50,6 +50,22 @@ function onResizeCanvas() {
     resizeCanvas()
 }
 
+// add new text drawing
+function odAddNewTextDrawing() {
+    addText()
+    renderMeme()
+}
+
+function onSetText(el) {
+    setSelectedDrawingText(el.value)
+    renderMeme()
+}
+
+function onUpdateFontSize(el) {
+    document.querySelector('.fontSizeValue').innerText = el.value
+}
+
+// select/deselect drawing per cursor position
 function onDown(ev) {
     const pos = getEvPos(ev)
     let idx = getDrawingIdxAtPos(pos)
