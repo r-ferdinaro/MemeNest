@@ -78,7 +78,7 @@ function resetBrush() {
     // TODO: update brush based on user definitions
     gBrush = {
         txt: '',
-        fontSize: 30,
+        fontSize: 40,
         font: 'helvetica',
         fillColor: '#ffffff',
         strokeColor: '#000000',
@@ -262,12 +262,45 @@ function setSelectedDrawingText(txt) {
     drawings[idx].txt = txt
 }
 
-// select/deselect drawing by and sync brush text
+// select/deselect drawing and sync all brush properties from it
 function selectDrawing(idx) {
-    const { drawings } = gMeme
+    const { shape } = gBrush
 
     gMeme.selectedDrawingIdx = idx
-    gBrush.txt = (idx === null) ? '' : drawings[idx].txt
+    if (idx === null) {
+        gBrush.txt = ''
+    
+    } else {
+        const { txt, font, size: fontSize, fillColor, strokeColor } = gMeme.drawings[idx]
+
+        gBrush = {
+            txt,
+            font,
+            fontSize,
+            fillColor,
+            strokeColor,
+            shape
+        }
+    }
+}
+
+// remove selected drawing from meme
+function removeDrawing() {
+    const { drawings, selectedDrawingIdx: idx } = gMeme
+    
+    if (idx === null) return
+
+    drawings.splice(idx, 1)
+    gMeme.selectedDrawingIdx = null
+    gBrush.txt = ''
+}
+
+// update a brush and selected drawing property
+function updateBrush(key, value) {
+    const { drawings, selectedDrawingIdx: idx } = gMeme
+    gBrush[key] = value
+    if (idx === null) return
+    drawings[idx][key === 'fontSize' ? 'size' : key] = value
 }
 
 // update drawing's position

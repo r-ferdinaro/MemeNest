@@ -62,11 +62,11 @@
                         <option value="futura">Futura</option>
                     </select>
                     <div class="font-size-container">
-                        <input type="range" min="10" max="50" value="20" id="fontSizeSlide" oninput="onUpdateFontSize(this)">
-                        <p>Font size <span class="fontSizeValue" id="fontSizeValue">20</span></p>
+                        <input class="font-size-slider" type="range" min="20" max="60" value="40" id="fontSizeSlide" oninput="onUpdateFontSize(this)">
+                        <p>Font size <span class="font-size-value" id="fontSizeValue">40</span></p>
                     </div>
-                    <input type="color" value="#000000" onchange="onSetStrokeColor(this)">
-                    <input type="color" value="#000000" onchange="onSetFontColor(this)">
+                    <input class="stroke-color" type="color" value="#000000" onchange="onSetStrokeColor(this)">
+                    <input class="fill-color" type="color" value="#ffffff" onchange="onSetFontColor(this)">
                 </div>
 
                 <div class="stickers-container"> <p>temporary text</p></div>
