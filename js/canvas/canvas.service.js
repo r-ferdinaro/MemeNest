@@ -137,18 +137,24 @@ function draw(pos) {
 	}
 }
 
-// Draw a line
-function drawLine(pos) {
-    const { x, y } = pos
-    const { fillColor, size } = gBrush
+// draw a drawing into canvas
+function drawText(drawing) {
+    const { txt, size, font, fillColor, strokeColor, pos } = drawing
 
-	gCtx.strokeStyle = fillColor
-	gCtx.lineWidth = size
-	
-    gCtx.beginPath()
-	gCtx.moveTo(gStartPos.x, gStartPos.y)
-	gCtx.lineTo(x, y)
-	gCtx.stroke()
+    // set drawing properties
+    gCtx.lineWidth = 2
+    gCtx.font = `${size}px ${font}`
+    gCtx.textAlign = 'center'
+    gCtx.textBaseline = 'middle'
+    gCtx.fillStyle = fillColor
+    gCtx.strokeStyle = strokeColor
+
+    // draw text to canvas
+    gCtx.fillText(txt, pos.x, pos.y)
+    gCtx.strokeText(txt, pos.x, pos.y)
+}
+
+// highlight border around selected drawing
 }
 
 function drawArc(pos) {
