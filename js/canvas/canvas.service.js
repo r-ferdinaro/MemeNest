@@ -2,12 +2,16 @@
 
 // router to call correct function when loading canvas
 function loadItem() {
-    const { itemType, itemId,} = gSelectedItem
-    // const itemId = gSelectedItem.itemId
-    // const itemType = gSelectedItem.itemType
+    let { itemType, itemId,} = gSelectedItem
+    
+    if (!itemType && !itemId) {
+        gSelectedItem.itemType = itemType = 'image'
+        gSelectedItem.itemId = itemId = getItems('gallery')[0].id
+    }
 
     // TODO: Might want to load a sample (first) image if !itemId
-    if (itemType === 'image' || (!itemId && !itemType)) {
+    if (itemType === 'image') {
+
         loadImage(itemType, itemId)
     } else {
         loadMeme(itemType, itemId)
@@ -48,12 +52,12 @@ function loadImage(itemType, itemId) {
 
 function renderItemToCanvas(imageObj) {
     const img = new Image();
-    
-    img.onload = () => {      
+
+    img.onload = () => {
         gSelectedItem.elImg = img
-        
+
         gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
-        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+        renderMeme()
     }
     img.src = `${imageObj.url}`
 }
@@ -63,39 +67,38 @@ function resetMeme(imageId) {
     gMeme = {
         id: '',
         selectedImgId: imageId || '',
-        selectedDrawIdx: null,
+        selectedDrawingIdx: null,
         drawings: []
     }
 }
 
 // Reset brush object
 function resetBrush() {
-    // TODO: Add support for different shapes - text, sticker
+    // TODO: add support for sticker shape and selected sticker.
+    // TODO: update brush based on user definitions
     gBrush = {
-        isFill: false,
-        isOutline: false,  
-	    fillColor: '#000000',
-        outlineColor: '#000000',
-	    shape: 'line',
-	    size: 1
+        txt: '',
+        fontSize: 30,
+        font: 'helvetica',
+        fillColor: '#ffffff',
+        strokeColor: '#000000',
+        shape: 'text'
     }
 }
 
-// TODO: add functions that will edit the brush
-
 // Detect window resize and adjust canvas dimensions accordingly
 function resizeCanvas() {
-    const elContainer = document.querySelector('.canvas-container')
+    const elCanvasContainer = document.querySelector('.canvas-container')
     const { elImg } = gSelectedItem
-	
-    gElCanvas.width = elContainer.offsetWidth
+
+    gElCanvas.width = elCanvasContainer.offsetWidth
 
     if (elImg) {
         gElCanvas.height = (elImg.naturalHeight / elImg.naturalWidth) * gElCanvas.width
-        gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
     } else {
-        gElCanvas.height = elContainer.offsetWidth
+        gElCanvas.height = elCanvasContainer.offsetWidth
     }
+    renderMeme()
 }
 
 // Get event positions on Web & Mobile
@@ -119,60 +122,158 @@ function getEvPos(ev) {
     }
 }
 
-// TODO: support drawing stickers
-// send to correct draw function
-function draw(pos) {
-	switch (gBrush.shape) {
-		case 'line':
-			drawLine(pos)
-			break
-        case 'circle':
-            drawArc(pos)
-            break
-        case 'square':
-            drawRect(pos)
-			break
-	}
-}
+// render meme's image and drawings to canvas
+function renderMeme() {
+    const { drawings, selectedDrawingIdx } = gMeme
+    const { width, height } = gElCanvas
+    const { elImg } = gSelectedItem
 
-// Draw a line
-function drawLine(pos) {
-    const { x, y } = pos
-    const { fillColor, size } = gBrush
+    // Clear canvas
+    gCtx.clearRect(0, 0, width, height)
 
-	gCtx.strokeStyle = fillColor
-	gCtx.lineWidth = size
-	
-    gCtx.beginPath()
-	gCtx.moveTo(gStartPos.x, gStartPos.y)
-	gCtx.lineTo(x, y)
-	gCtx.stroke()
-}
-
-function drawArc(pos) {
-    const { x, y } = pos
-    const { fillColor, mode, size } = gBrush
-    
-    gCtx.fillStyle = gCtx.strokeStyle = fillColor
-    gCtx.lineWidth = 1
-	gCtx.beginPath()
-
-	gCtx.arc(x, y, size, 0, 2 * Math.PI)
-	mode === 'fill' ? gCtx.fill() : gCtx.stroke()
-}
-
-function drawRect(pos) {
-    const { x, y } = pos
-    const { fillColor, mode, size } = gBrush
-
-	gCtx.fillStyle = gCtx.strokeStyle = fillColor
-	gCtx.lineWidth = 1
-	
-    gCtx.beginPath()
-
-    if (mode === 'fill') {
-        gCtx.fillRect(x, y, size, size)
-    } else {
-        gCtx.strokeRect(x, y, size, size)
+    // draw selected item's image if one has been assigned
+    if (elImg) {
+        gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
     }
+
+    // render drawings in reverse so index 0 renders on top
+    for (let idx = drawings.length - 1; idx >= 0; idx--) {
+        drawText(drawings[idx])
+        // check if current drawing should be highlighted
+        if (idx === selectedDrawingIdx) highlightDrawing(drawings[idx])
+    }
+}
+
+// draw a drawing into canvas
+function drawText(drawing) {
+    const { txt, size, font, fillColor, strokeColor, pos } = drawing
+
+    // set drawing properties
+    gCtx.lineWidth = 2
+    gCtx.font = `${size}px ${font}`
+    gCtx.textAlign = 'center'
+    gCtx.textBaseline = 'middle'
+    gCtx.fillStyle = fillColor
+    gCtx.strokeStyle = strokeColor
+
+    // draw text to canvas
+    gCtx.fillText(txt, pos.x, pos.y)
+    gCtx.strokeText(txt, pos.x, pos.y)
+}
+
+// highlight border around selected drawing
+function highlightDrawing(drawing) {
+    const { x, y, width, height } = getDrawingBorders(drawing)
+
+    // set highlight properties
+    gCtx.strokeStyle = '#0099ff'
+    gCtx.lineWidth = 2
+
+    // draw highlighting border
+    gCtx.setLineDash([6, 4])
+    gCtx.strokeRect(x, y, width, height)
+
+    // reset line properties to none
+    gCtx.setLineDash([])
+}
+// get drawing start and end positions (x and y)
+function getDrawingBorders(drawing) {
+    const { txt, size, font, pos } = drawing
+    const extraPadding = 5
+
+    // set drawing font to canvas
+    // calculate drawing's width based on text, size and font 
+    gCtx.font = `${size}px ${font}`
+    const measuredWidth = gCtx.measureText(txt).width
+
+    // set start & end positions
+    const x = pos.x - (measuredWidth / 2) - extraPadding
+    const y = pos.y - (size / 2) - extraPadding
+    const width = measuredWidth + (extraPadding * 2)
+    const height = size + (extraPadding * 2)
+
+    return {
+        x,
+        y,
+        width,
+        height
+    }
+}
+
+// add drawing based on brush configuration
+function addText() {
+    const { txt, fontSize, font, fillColor, strokeColor } = gBrush
+    const { width, height } = gElCanvas
+    const text = txt.trim() || 'Text'
+
+    // set drawing's middle position
+    const x = width / 2
+    const y = height / 2
+    
+    // set drawing properties
+    const drawing = {
+        txt: text,
+        size: fontSize,
+        font,
+        fillColor,
+        strokeColor,
+        pos: {x, y}
+    }
+    // store drawing data to gMeme at the front (top of the z-order)
+    // set drawing to be selected drawing
+    gMeme.drawings.unshift(drawing)
+    gMeme.selectedDrawingIdx = 0
+}
+
+// get latest drawing's positions
+function getDrawingIdxAtPos(pos) {
+    const idx = gMeme.drawings.findIndex( drawing => {
+        // get drawing's positions
+        const { x, y, width, height } = getDrawingBorders(drawing)
+
+        // check if cursor is pointing in the dimensions of the drawing
+        return (
+            pos.x >= x &&
+            pos.x <= x + width &&
+            pos.y >= y &&
+            pos.y <= y + height
+        )
+    })
+
+    // return drawing position or null if no match was found
+    return (idx !== -1) ? idx : null
+}
+
+// reorder modified drawing to top of the drawings array 
+function bringDrawingToFront(idx) {
+    const [ drawing ] = gMeme.drawings.splice(idx, 1)
+
+    // move drawing to top of array and return its index (0)
+    gMeme.drawings.unshift(drawing)
+    return 0
+}
+
+// update brush and selected drawing text
+function setSelectedDrawingText(txt) {
+    const { drawings, selectedDrawingIdx: idx } = gMeme
+    gBrush.txt = txt
+
+    if (idx === null) return
+    drawings[idx].txt = txt
+}
+
+// select/deselect drawing by and sync brush text
+function selectDrawing(idx) {
+    const { drawings } = gMeme
+
+    gMeme.selectedDrawingIdx = idx
+    gBrush.txt = (idx === null) ? '' : drawings[idx].txt
+}
+
+// update drawing's position
+function moveSelectedDrawing(pos) {
+    const idx = gMeme.selectedDrawingIdx
+    if (idx === null) return
+
+    gMeme.drawings[idx].pos = pos
 }
