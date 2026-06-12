@@ -49,6 +49,11 @@ function onResizeCanvas() {
     resizeCanvas()
 }
 
+// save meme to storage
+function onSaveMeme() {
+    saveAndSyncMeme()
+}
+
 // add new text drawing
 function odAddNewTextDrawing() {
     addText()
