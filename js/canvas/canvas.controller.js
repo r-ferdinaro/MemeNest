@@ -18,8 +18,6 @@ let gOffsetPos = {
 }
 let gIsMouseDown = false
 
-// TODO: gMeme should also have a memeId property. Upon save, if no Id - create one. If one exists, update the existing meme. This means I should support editing existing saved memes
-
 function onEditorInit() {
     gElCanvas = document.querySelector('canvas')
 	gCtx = gElCanvas.getContext('2d')
@@ -49,6 +47,11 @@ function removeResizeListeners() {
 
 function onResizeCanvas() {
     resizeCanvas()
+}
+
+// save meme to storage
+function onSaveMeme() {
+    saveAndSyncMeme()
 }
 
 // add new text drawing

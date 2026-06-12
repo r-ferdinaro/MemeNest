@@ -6,6 +6,7 @@ const MEME_STORAGE_KEY = 'memeDB'
 let gMemes
 let gImgs
 _createImages()
+_createMemes()
 
 // Get all/some images/memes to gallery based on search filter
 function getItems(page, searchFilter = '') {
@@ -39,9 +40,10 @@ function getItemById(type, id) {
 //     _saveImgsToStorage()
 // }
 
-// TODO: save meme from editor page
-function saveMeme() {
-    (gMeme.id) ? _updateMeme() : _saveMeme()
+// save new meme or update existing one
+// save the current meme from the editor.
+function saveMeme(imgUrl) {
+    return (gMeme.id) ? _updateMeme(imgUrl) : _saveNewMeme(imgUrl)
 }
 
 // // TODO: support uploads in a future PR.
@@ -67,22 +69,46 @@ function _createImg(url, keywords = ['user']) {
     }
 }
 
-// Save new meme to Storage
-function _saveNewMeme() {
-    const meme = {
-        id: makeId(),
-        ...gMeme
-    }
-    
+// save new meme to localStorage
+function _saveNewMeme(imgUrl) {
+    const meme = _createMeme(imgUrl)
+
     gMemes.unshift(meme)
-    _saveImgsToStorage()
+    _saveMemesToStorage()
+    return meme
 }
 
-// Save an existing meme
-function _updateMeme() {
+// Update an existing saved meme in place and return it
+function _updateMeme(imgUrl) {
+    const meme = _createMeme(imgUrl)
     const memeIdx = gMemes.findIndex(meme => meme.id === gMeme.id)
-    
-    gMemes.splice(memeIdx, 1, gMeme)
+
+    // fall back to saving as new if the original was removed in the meantime
+    if (memeIdx === -1) gMemes.unshift(meme)
+    else gMemes.splice(memeIdx, 1, meme)
+
+    _saveMemesToStorage()
+    return meme
+}
+
+// Build a storable meme record from the current gMeme state
+function _createMeme(imgUrl) {
+    const { id: memeId, selectedImgId, drawings: memeDrawings } = gMeme
+
+    // reuse the existing meme id when editing, otherwise mint a new one
+    const id = memeId || makeId()
+    const baseImg = getItemById('image', selectedImgId)
+    const keywords = (baseImg) ? baseImg.keywords : []
+    const drawings = JSON.parse(JSON.stringify(memeDrawings))
+
+    return {
+        id,
+        url: imgUrl,
+        selectedImgId,
+        selectedDrawingIdx: null,
+        keywords,
+        drawings
+    }
 }
 
 // Load images from localStorage or load sample ones
@@ -255,6 +281,11 @@ function _createImages() {
 
     gImgs = images
     _saveImgsToStorage()
+}
+
+// load memes from localStorage
+function _createMemes() {
+    gMemes = loadFromStorage(MEME_STORAGE_KEY) || []
 }
 
 // Save updated images to localStorage
