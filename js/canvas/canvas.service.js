@@ -59,6 +59,8 @@ function loadImage(itemType, itemId) {
 function renderItemToCanvas(imageObj) {
     const img = new Image();
 
+    img.crossOrigin = 'anonymous'
+
     img.onload = () => {
         gSelectedItem.elImg = img
 

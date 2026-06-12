@@ -72,7 +72,7 @@ function _createImg(url, keywords = ['user']) {
 // save new meme to localStorage
 function _saveNewMeme(imgUrl) {
     const meme = _createMeme(imgUrl)
-    
+
     gMemes.unshift(meme)
     _saveMemesToStorage()
     return meme
@@ -82,7 +82,7 @@ function _saveNewMeme(imgUrl) {
 function _updateMeme(imgUrl) {
     const meme = _createMeme(imgUrl)
     const memeIdx = gMemes.findIndex(meme => meme.id === gMeme.id)
-    
+
     // fall back to saving as new if the original was removed in the meantime
     if (memeIdx === -1) gMemes.unshift(meme)
     else gMemes.splice(memeIdx, 1, meme)
