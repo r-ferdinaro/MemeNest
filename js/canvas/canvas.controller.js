@@ -54,6 +54,12 @@ function onSaveMeme() {
     saveAndSyncMeme()
 }
 
+function onDownloadMeme(el) {
+    const imgUrl = getMemeImgUrl()
+    
+    el.href = imgUrl
+}
+
 // add new text drawing
 function odAddNewTextDrawing() {
     addText()
