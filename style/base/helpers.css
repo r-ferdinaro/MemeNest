@@ -22,7 +22,6 @@
 
 /* Display helpers */
 .editor.hide,
-.gallery.hide,
-.about.hide {
+.gallery.hide {
     display: none;
 }

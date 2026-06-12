@@ -20,7 +20,7 @@ function onInit() {
 
 function renderPageContent() {
     const { page = 'gallery' } = gQueryParams
-    const pages = ['gallery', 'editor', 'about']
+    const pages = ['gallery', 'editor']
     const activePage = ['gallery', 'memes'].includes(page) ? 'gallery' : page
 
     // hide/show sections, based on the selected page using the hide class
@@ -102,7 +102,7 @@ function renderQueryParamsFilters() {
     const { page, filterBy } = gQueryParams
     
     // Early return if irrelevant page or no filter value
-    if (['editor', 'about'].includes(page) || !filterBy) return
+    if (page === 'editor' || !filterBy) return
     
     document.querySelector('.search-bar').value = filterBy
     // TODO: if search content words are part of existing tags, change the tags order so they are first to show, and change their style so it's obvious they are selected

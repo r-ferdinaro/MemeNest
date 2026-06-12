@@ -41,6 +41,7 @@ button, .btn {
     width: max-content;
     
     border: none;
+    padding: 0;
     background-color: transparent;
     
     font-size: larger;
@@ -51,5 +52,4 @@ button, .btn {
 
 [class^="fa-"], [class*=" fa-"] {
     height: 100%;
-    /* font-size: 1.5rem !important; */
 }
