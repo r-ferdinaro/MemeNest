@@ -17,14 +17,25 @@ function loadItem() {
     }
 }
 
-// load existing saved meme into canvas
-// Don't override data if exists and user didn't specifically chose to do so
-// TODO: probably incorrect - review again once I want to support loading memes
+// load an existing saved meme into the canvas for editing
 function loadMeme(itemType, itemId) {
-    if (gMeme?.id === id) return
+    // already loaded and rendered - just re-render to be safe
+    if (gMeme?.id === itemId && gSelectedItem.elImg) {
+        renderMeme()
+        return
+    }
 
-    gMeme = getItemById('meme', id)
+    const savedMeme = getItemById('meme', itemId)
+    if (!savedMeme) return
+
+    // clone so edits don't mutate the stored record until the user saves
+    gMeme = structuredClone(savedMeme)
+    gMeme.selectedDrawingIdx = null
     resetBrush()
+
+    // render the meme's base image, which in turn renders its drawings
+    const imageObj = getItemById('image', gMeme.selectedImgId)
+    if (imageObj) renderItemToCanvas(imageObj)
 }
 
 // load image or blank page to canvas
@@ -60,7 +71,6 @@ function renderItemToCanvas(imageObj) {
     const img = new Image();
 
     img.crossOrigin = 'anonymous'
-
     img.onload = () => {
         gSelectedItem.elImg = img
 
@@ -149,6 +159,27 @@ function renderMeme() {
         // check if current drawing should be highlighted
         if (idx === selectedDrawingIdx) highlightDrawing(drawings[idx])
     }
+}
+
+// capture the canvas as dataURL, save to storage, and sync state
+function saveAndSyncMeme() {
+    const imgUrl = getMemeImgUrl()
+    const savedMeme = saveMeme(imgUrl)
+
+    gMeme.id = gSelectedItem.itemId = savedMeme.id
+    gSelectedItem.itemType = 'meme'
+}
+
+// save as image in dataURL format
+function getMemeImgUrl() {
+    // clear drawing selections and re-render canvas
+    gMeme.selectedDrawingIdx = null
+    renderMeme()
+
+    // save edited canvas to dataURL format
+    const imgUrl = gElCanvas.toDataURL()
+
+    return imgUrl
 }
 
 // draw a drawing into canvas
