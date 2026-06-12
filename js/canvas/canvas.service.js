@@ -9,7 +9,6 @@ function loadItem() {
         gSelectedItem.itemId = itemId = getItems('gallery')[0].id
     }
 
-    // TODO: Might want to load a sample (first) image if !itemId
     if (itemType === 'image') {
 
         loadImage(itemType, itemId)
@@ -30,7 +29,6 @@ function loadMeme(itemType, itemId) {
 
 // load image or blank page to canvas
 // Don't override data if exists and user didn't specifically chose to do so
-// Note: I allow blank canvases on init - but it's just an edge case. I could also load a sample image
 function loadImage(itemType, itemId) {
     const { drawings, selectedImgId } = gMeme
     const { elImg } = gSelectedItem
@@ -83,7 +81,6 @@ function resetMeme(imageId) {
 // Reset brush object
 function resetBrush() {
     // TODO: add support for sticker shape and selected sticker.
-    // TODO: update brush based on user definitions
     gBrush = {
         txt: '',
         fontSize: 40,

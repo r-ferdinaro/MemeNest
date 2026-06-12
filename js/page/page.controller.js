@@ -108,9 +108,6 @@ function renderQueryParamsFilters() {
     // TODO: if search content words are part of existing tags, change the tags order so they are first to show, and change their style so it's obvious they are selected
 }
 
-// TODO: should be triggered upon changing the page 
-// TODO: should be triggered upon changing the search filter values or selecting a specific tag
-// TODO: should be triggered when user clicks on image/meme to open editor
 // Set current query params to the search bar
 function setQueryParams() {
     const queryParams = new URLSearchParams()
