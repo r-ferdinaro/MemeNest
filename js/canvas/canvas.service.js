@@ -2,7 +2,24 @@
 
 // router to call correct function when loading canvas
 function loadItem() {
-    let { itemType, itemId,} = gSelectedItem
+    const { itemType, itemId } = gSelectedItem
+    const { selectedDrawingIdx, selectedImgId } = gMeme
+
+    if (!itemId && restoreEditorState()) {
+        gEditorReady = true
+        resetBrush()
+
+        if (selectedDrawingIdx !== null && selectedDrawingIdx !== undefined) {
+            selectDrawing(selectedDrawingIdx)
+        }
+
+        const imageObj = getItemById('image', selectedImgId)
+        
+        (imageObj) ? renderItemToCanvas(imageObj) : renderMeme()
+        return
+    }
+
+    gEditorReady = true
 
     if (!itemType && !itemId) {
         gSelectedItem.itemType = itemType = 'image'
@@ -10,7 +27,6 @@ function loadItem() {
     }
 
     if (itemType === 'image') {
-
         loadImage(itemType, itemId)
     } else {
         loadMeme(itemType, itemId)
@@ -164,6 +180,7 @@ function renderMeme() {
         if (idx === selectedDrawingIdx) highlightDrawing(drawing)
     }
 
+    if (gEditorReady) saveEditorState()
 }
 
 // capture the canvas as dataURL, save to storage, and sync state

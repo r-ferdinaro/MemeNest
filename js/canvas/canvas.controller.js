@@ -4,7 +4,6 @@
 let gElCanvas
 let gCtx
 
-// TODO: should save to localStorage in case user refreshes page ??
 let gMeme = {
     id: null,
     selectedImgId: null,
@@ -17,10 +16,12 @@ let gOffsetPos = {
     y: 0 
 }
 let gIsMouseDown = false
+let gEditorReady = false
 
 function onEditorInit() {
     gElCanvas = document.querySelector('canvas')
 	gCtx = gElCanvas.getContext('2d')
+    gEditorReady = false
 
     resizeCanvas()
     addEventListeners()
