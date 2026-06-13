@@ -54,11 +54,26 @@ function onResizeCanvas() {
 // save meme to storage
 function onSaveMeme() {
     saveAndSyncMeme()
+    showBanner('Meme saved')
 }
 
 function onDownloadMeme(el) {
     const imgUrl = getMemeImgUrl()
     el.href = imgUrl
+    showBanner('Meme downloaded')
+}
+
+// upload the meme to Cloudinary, then immediately open Facebook's share dialog
+function onUploadImg(ev) {
+    ev.preventDefault()
+    const canvasData = getMemeImgUrl()
+
+    function onSuccess(uploadedImgUrl) {
+        const encodedUrl = encodeURIComponent(uploadedImgUrl)
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&t=${encodedUrl}`)
+    }
+
+    uploadImg(canvasData, onSuccess)
 }
 
 // add new text drawing

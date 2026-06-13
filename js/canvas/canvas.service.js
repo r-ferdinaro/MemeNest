@@ -457,3 +457,23 @@ function moveSelectedDrawing(pos) {
 
     gMeme.drawings[idx].pos = pos
 }
+
+// upload meme dataURL to Cloudinary and call onSuccess with the public URL
+async function uploadImg(imgData, onSuccess) {
+    const UPLOAD_URL = `https://api.cloudinary.com/v1_1/webify/image/upload`
+
+    const formData = new FormData()
+    formData.append('file', imgData)
+    formData.append('upload_preset', 'webify')
+
+    try {
+        const res = await fetch(UPLOAD_URL, {
+            method: 'POST',
+            body: formData,
+        })
+        const data = await res.json()
+        onSuccess(data.secure_url)
+    } catch (err) {
+        console.error('Upload failed:', err)
+    }
+}
