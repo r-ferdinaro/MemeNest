@@ -3,7 +3,7 @@
 // router to call correct function when loading canvas
 function loadItem() {
     let { itemType, itemId,} = gSelectedItem
-    
+
     if (!itemType && !itemId) {
         gSelectedItem.itemType = itemType = 'image'
         gSelectedItem.itemId = itemId = getItems('gallery')[0].id
@@ -92,14 +92,14 @@ function resetMeme(imageId) {
 
 // Reset brush object
 function resetBrush() {
-    // TODO: add support for sticker shape and selected sticker.
     gBrush = {
         txt: '',
         fontSize: 40,
         font: 'helvetica',
         fillColor: '#ffffff',
         strokeColor: '#000000',
-        shape: 'text'
+        shape: 'text',
+        stickerId: null
     }
 }
 
@@ -155,10 +155,15 @@ function renderMeme() {
 
     // render drawings in reverse so index 0 renders on top
     for (let idx = drawings.length - 1; idx >= 0; idx--) {
-        drawText(drawings[idx])
+        const drawing = drawings[idx]
+        // draw based on the drawing's shape (text or sticker)
+        if (drawing.shape === 'sticker') drawSticker(drawing)
+        else drawText(drawing)
+        
         // check if current drawing should be highlighted
-        if (idx === selectedDrawingIdx) highlightDrawing(drawings[idx])
+        if (idx === selectedDrawingIdx) highlightDrawing(drawing)
     }
+
 }
 
 // capture the canvas as dataURL, save to storage, and sync state
@@ -199,6 +204,22 @@ function drawText(drawing) {
     gCtx.strokeText(txt, pos.x, pos.y)
 }
 
+// draw a sticker (emoji) into canvas
+function drawSticker(drawing) {
+    const { stickerId, size, pos } = drawing
+    const sticker = getStickerById(stickerId)
+    
+    if (!sticker) return
+
+    // set sticker properties
+    gCtx.font = `${size}px serif`
+    gCtx.textAlign = 'center'
+    gCtx.textBaseline = 'middle'
+
+    // draw sticker emoji to canvas
+    gCtx.fillText(sticker.emoji, pos.x, pos.y)
+}
+
 // highlight border around selected drawing
 function highlightDrawing(drawing) {
     const { x, y, width, height } = getDrawingBorders(drawing)
@@ -216,13 +237,11 @@ function highlightDrawing(drawing) {
 }
 // get drawing start and end positions (x and y)
 function getDrawingBorders(drawing) {
-    const { txt, size, font, pos } = drawing
+    const { size, pos } = drawing
     const extraPadding = 5
 
-    // set drawing font to canvas
-    // calculate drawing's width based on text, size and font 
-    gCtx.font = `${size}px ${font}`
-    const measuredWidth = gCtx.measureText(txt).width
+    // calculate drawing's width based on its content
+    const measuredWidth = measureDrawingWidth(drawing)
 
     // set start & end positions
     const x = pos.x - (measuredWidth / 2) - extraPadding
@@ -238,6 +257,21 @@ function getDrawingBorders(drawing) {
     }
 }
 
+// measure a drawing's rendered width based on its shape
+function measureDrawingWidth(drawing) {
+    const { shape, size } = drawing
+
+    if (shape === 'sticker') {
+        const sticker = getStickerById(drawing.stickerId)
+
+        gCtx.font = `${size}px serif`
+        return gCtx.measureText(sticker ? sticker.emoji : '').width
+    }
+
+    gCtx.font = `${size}px ${drawing.font}`
+    return gCtx.measureText(drawing.txt).width
+}
+
 // add drawing based on brush configuration
 function addText() {
     const { txt, fontSize, font, fillColor, strokeColor } = gBrush
@@ -250,6 +284,7 @@ function addText() {
     
     // set drawing properties
     const drawing = {
+        shape: 'text',
         txt: text,
         size: fontSize,
         font,
@@ -261,6 +296,44 @@ function addText() {
     // set drawing to be selected drawing
     gMeme.drawings.unshift(drawing)
     gMeme.selectedDrawingIdx = 0
+}
+
+// add a sticker drawing based on the given sticker id
+function addSticker(stickerId) {
+    const { width, height } = gElCanvas
+
+    // set sticker's middle position
+    const x = width / 2
+    const y = height / 2
+    const drawing = {
+        shape: 'sticker',
+        stickerId,
+        size: 50,
+        pos: {x, y}
+    }
+    
+    // store drawing in first position and select
+    gMeme.drawings.unshift(drawing)
+    gMeme.selectedDrawingIdx = 0
+}
+
+function selectSticker(stickerId) {
+    if (gBrush.shape === 'sticker' && gBrush.stickerId === stickerId) {
+        clearStickerSelection()
+        return
+    }
+
+    gBrush.shape = 'sticker'
+    gBrush.stickerId = stickerId
+    addSticker(stickerId)
+}
+
+// leave sticker mode: reset the brush back to text and drop any selection
+function clearStickerSelection() {
+    gBrush.shape = 'text'
+    gBrush.stickerId = null
+    gBrush.txt = ''
+    gMeme.selectedDrawingIdx = null
 }
 
 // get latest drawing's positions
@@ -297,28 +370,42 @@ function setSelectedDrawingText(txt) {
     gBrush.txt = txt
 
     if (idx === null) return
+    // stickers have no editable text
+    if (drawings[idx].shape === 'sticker') return
     drawings[idx].txt = txt
 }
 
 // select/deselect drawing and sync all brush properties from it
 function selectDrawing(idx) {
-    const { shape } = gBrush
-
     gMeme.selectedDrawingIdx = idx
+
     if (idx === null) {
         gBrush.txt = ''
-    
-    } else {
-        const { txt, font, size: fontSize, fillColor, strokeColor } = gMeme.drawings[idx]
+        return
+    }
 
-        gBrush = {
-            txt,
-            font,
-            fontSize,
-            fillColor,
-            strokeColor,
-            shape
-        }
+    const drawing = gMeme.drawings[idx]
+
+    // selecting a sticker switches the brush into sticker mode
+    if (drawing.shape === 'sticker') {
+        gBrush.shape = 'sticker'
+        gBrush.stickerId = drawing.stickerId
+        gBrush.txt = ''
+        return
+    }
+
+    // selecting text syncs all text brush properties from the drawing
+    const { txt, font, size: fontSize, fillColor, strokeColor } = drawing
+
+    gBrush = {
+        ...gBrush,
+        txt,
+        font,
+        fontSize,
+        fillColor,
+        strokeColor,
+        shape: 'text',
+        stickerId: null
     }
 }
 
@@ -331,6 +418,9 @@ function removeDrawing() {
     drawings.splice(idx, 1)
     gMeme.selectedDrawingIdx = null
     gBrush.txt = ''
+    // leave sticker mode after deleting a drawing
+    gBrush.shape = 'text'
+    gBrush.stickerId = null
 }
 
 // update a brush and selected drawing property
@@ -338,6 +428,8 @@ function updateBrush(key, value) {
     const { drawings, selectedDrawingIdx: idx } = gMeme
     gBrush[key] = value
     if (idx === null) return
+    // text styling doesn't apply to stickers
+    if (drawings[idx].shape === 'sticker') return
     drawings[idx][key === 'fontSize' ? 'size' : key] = value
 }
 

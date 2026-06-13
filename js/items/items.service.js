@@ -8,6 +8,30 @@ let gImgs
 _createImages()
 _createMemes()
 
+// hardcoded emoji list
+const gStickers = [
+    { id: 'st1', emoji: '😀' },
+    { id: 'st2', emoji: '😎' },
+    { id: 'st3', emoji: '😂' },
+    { id: 'st4', emoji: '😍' },
+    { id: 'st5', emoji: '🔥' },
+    { id: 'st6', emoji: '👍' },
+    { id: 'st7', emoji: '🎉' },
+    { id: 'st8', emoji: '💯' },
+    { id: 'st9', emoji: '🚀' },
+    { id: 'st10', emoji: '🐶' },
+    { id: 'st11', emoji: '🐱' },
+    { id: 'st12', emoji: '💀' }
+]
+
+function getStickers() {
+    return gStickers
+}
+
+function getStickerById(stickerId) {
+    return gStickers.find(sticker => sticker.id === stickerId)
+}
+
 // Get all/some images/memes to gallery based on search filter
 function getItems(page, searchFilter = '') {
     const dataSource = (page === 'gallery') ? gImgs : gMemes
@@ -25,19 +49,18 @@ function getItems(page, searchFilter = '') {
     })
 }
 
-// create images/memes keyword score map
+// Build a { keyword: score } map for the page's data source,
+// where score is the amount of images/memes that hold the keyword
 function getKeywords(page) {
     const dataSource = (page === 'gallery') ? gImgs : gMemes
     const keywordMap = {}
 
-    dataSource.forEach( item => {
+    dataSource.forEach(item => {
         if (!item.keywords) return
-
-        item.keywords.forEach( keyword => {
-            keywordMap[keyword] = (++keywordMap[keyword]) || 1
+        item.keywords.forEach(keyword => {
+            keywordMap[keyword] = (keywordMap[keyword] || 0) + 1
         })
     })
-    
     return keywordMap
 }
 
@@ -46,15 +69,6 @@ function getItemById(type, id) {
     const dataSource = (type === 'image') ? gImgs : gMemes
     return dataSource.find(item => id === item.id)
 }
-
-// TODO: implement deleting a photo/meme
-// function deleteItem(type, id) {
-//     const dataSource = (type === 'image') ? gImgs : gMemes
-//     const itemIdx = dataSource.findIndex(item => itemId === item.id)
-
-//     dataSource.splice(itemIdx, 1)
-//     _saveImgsToStorage()
-// }
 
 // save new meme or update existing one
 // save the current meme from the editor.
