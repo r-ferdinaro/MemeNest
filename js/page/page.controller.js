@@ -26,11 +26,15 @@ function renderPageContent() {
     // hide/show sections, based on the selected page using the hide class
     pages.forEach( page => document.querySelector(`.${page}`).classList.toggle('hide', page !== activePage))
 
-    // Render gallery content based on gallery type
+    // render gallery content & tags based on gallery type
     if (['gallery', 'memes'].includes(page)) {
         document.querySelector('.gallery-content').innerHTML = getGalleryElements()
+        renderTags()
+        addTagsResizeListener()
+    } else {
+        removeTagsResizeListener()
     }
-    
+
     // Initialize Editor
     if (page === 'editor') onEditorInit()
     else removeResizeListeners()
@@ -66,24 +70,101 @@ function onRenderGalleryItem(el = null) {
     renderPageContent()
 }
 
-// TODO: trigger search based on the target value
-// TODO: trigger setQueryParams
+// filter results based on the search bar value
 function OnSetSearchFilter(el) {
+    gQueryParams.filterBy = el.value
+    updateSearchFilter()
 }
 
-// TODO: if tag doesn't exist in search value - add to the end of the search value
-// TODO: if tag exists in search value - remove from search value
-// TODO: toggle class that will help understand wether tag is selected or not
-// TODO: trigger search based on the searchbar target value, 
-// TODO: trigger setQueryParams
+// toggle tag keyword in/out of the search bar
 function onTagFilter(el) {
+    const elSearch = document.querySelector('.search-bar')
+    const tagWords = el.getAttribute('value').toLowerCase().split(/\s+/)
+    let searchWords = elSearch.value.toLowerCase().split(/\s+/).filter( word => word.length)
+
+    const isTagSelected = tagWords.every( word => searchWords.includes(word))
+
+    if (isTagSelected) {
+        // remove tag from search
+        searchWords = searchWords.filter(word => !tagWords.includes(word))
+    } else {
+        // add tag to search filter
+        searchWords.push(...tagWords)
+    }
+
+    gQueryParams.filterBy = elSearch.value = searchWords.join(' ')
+    updateSearchFilter()
 }
 
-// TODO: clear value from search bar
-// TODO: clear special class from all tags
-// TODO: trigger search based on the searchbar target value, 
-// TODO: trigger setQueryParams
+// reset search bar and tags
 function onClearSearchFilter() {
+    document.querySelector('.search-bar').value = ''
+    gQueryParams.filterBy = ''
+    updateSearchFilter()
+}
+
+// Sync url, gallery results, and tags per filter
+function updateSearchFilter() {
+    setQueryParams()
+    document.querySelector('.gallery-content').innerHTML = getGalleryElements()
+    renderTags()
+}
+
+// Tag rendering functions
+
+function renderTags() {
+    const elContainer = document.querySelector('.tags-container')
+    const elPanel = document.querySelector('.tags-expanded')
+    const elExpand = document.querySelector('.expand')
+
+    if (!elContainer) return
+
+    // build the markup for a single tag
+    function getTagElement(tag) {
+        return `<a href="#" value="${tag.keyword}" class="tag${tag.isSelected ? ' tag-selected' : ''}" onclick="onTagFilter(this)">${tag.keyword}</a>`
+    }
+
+    const orderedTags = orderTags()
+
+    // render the first 5 tags - in web view (hidden in Mobile view)
+    elContainer.innerHTML = orderedTags.slice(0, 5).map(getTagElement).join('')
+    // render all tags to panel
+    elPanel.innerHTML = orderedTags.map(getTagElement).join('')
+    elExpand.classList.toggle('hide', !orderedTags.length)
+}
+
+// Show/hide the panel holding the tags that didn't fit the primary row
+function onToggleTagsPanel() {
+    document.querySelector('.tags-expanded').classList.toggle('open')
+}
+
+
+
+// sort tags by selected, count, alphabetically
+function orderTags() {
+    const { page, filterBy } = gQueryParams
+    const keywordMap = getKeywords(page)
+    const searchWords = filterBy.toLowerCase().trim().split(/\s+/)
+
+    return Object.keys(keywordMap)
+        .map(keyword => ({
+            keyword,
+            score: keywordMap[keyword],
+            isSelected: searchWords.includes(keyword.toLowerCase())
+        }))
+        .sort((a, b) => {
+            if (a.isSelected !== b.isSelected) return a.isSelected ? -1 : 1
+            if (a.score !== b.score) return b.score - a.score
+            return a.keyword.localeCompare(b.keyword)
+        })
+}
+
+function addTagsResizeListener() {
+    window.addEventListener('resize', renderTags)
+}
+
+function removeTagsResizeListener() {
+    window.removeEventListener('resize', renderTags)
 }
 
 
@@ -105,7 +186,6 @@ function renderQueryParamsFilters() {
     if (page === 'editor' || !filterBy) return
     
     document.querySelector('.search-bar').value = filterBy
-    // TODO: if search content words are part of existing tags, change the tags order so they are first to show, and change their style so it's obvious they are selected
 }
 
 // Set current query params to the search bar

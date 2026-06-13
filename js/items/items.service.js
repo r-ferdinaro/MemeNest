@@ -25,6 +25,22 @@ function getItems(page, searchFilter = '') {
     })
 }
 
+// create images/memes keyword score map
+function getKeywords(page) {
+    const dataSource = (page === 'gallery') ? gImgs : gMemes
+    const keywordMap = {}
+
+    dataSource.forEach( item => {
+        if (!item.keywords) return
+
+        item.keywords.forEach( keyword => {
+            keywordMap[keyword] = (++keywordMap[keyword]) || 1
+        })
+    })
+    
+    return keywordMap
+}
+
 // TODO: use this to get desired image/meme from storage
 function getItemById(type, id) {
     const dataSource = (type === 'image') ? gImgs : gMemes

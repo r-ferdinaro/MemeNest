@@ -26,16 +26,13 @@
             <div class="filter-section">
                 <input name="photos-search" placeholder="Search" class="search-bar" type="text" oninput="OnSetSearchFilter(this)">
                 <div class="btn search-bar-reset" onclick="onClearSearchFilter()"><i class="fa-solid fa-circle-xmark"></i></div>
-                <div class="tags-container">
-                    <a href="#" value="happy" onclick="onTagFilter(this)">happy</a>
-                    <a href="#" value="sad" onclick="onTagFilter(this)">sad</a>
-                    <a href="#" value="trump" onclick="onTagFilter(this)">trump</a>
-                    <a href="#" value="putin" onclick="onTagFilter(this)">putin</a>
-                </div>
-                <button class="expand" type="button"><i class="fa-solid fa-filter"></i></button>
+                <div class="tags-container"></div>
+                <button class="expand" onclick="onToggleTagsPanel()" type="button"><i class="fa-solid fa-filter"></i></button>
                 <button class="filter-btn" onclick="onToggleMenu(this)" type="button"><i class="fa-solid fa-filter"></i></button>
             </div>
-            
+
+            <div class="tags-expanded"></div>
+
             <div class="gallery-content"></div>
         </section>
 
