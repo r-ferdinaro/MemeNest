@@ -26,6 +26,7 @@ function onEditorInit() {
     addEventListeners()
     loadItem()
     renderBrushProperties()
+    renderStickers()
 }
 
 // Register necessary event listeners
@@ -56,14 +57,53 @@ function onSaveMeme() {
 
 function onDownloadMeme(el) {
     const imgUrl = getMemeImgUrl()
-    
     el.href = imgUrl
 }
 
 // add new text drawing
 function odAddNewTextDrawing() {
+    gBrush.shape = 'text'
+    gBrush.stickerId = null
     addText()
+    renderBrushProperties()
+    renderStickersSelection()
     renderMeme()
+}
+
+// click a palette sticker to add it / toggle sticker mode
+function onSelectSticker(stickerId) {
+    selectSticker(stickerId)
+    renderBrushProperties()
+    renderStickersSelection()
+    renderMeme()
+}
+
+// build the emoji sticker palette
+function renderStickers() {
+    const elContainer = document.querySelector('.stickers-container')
+    
+    if (!elContainer) return
+
+    let strHtml = ''
+    const stickers = getStickers()
+    
+    stickers.forEach( sticker =>
+        strHtml += `<button class="sticker-btn" data-id="${sticker.id}" onclick="onSelectSticker('${sticker.id}')">${sticker.emoji}</button>`
+    )
+
+    elContainer.innerHTML = strHtml
+    renderStickersSelection()
+}
+
+// highlight active sticker in palette
+function renderStickersSelection() {
+    const { shape, stickerId } = gBrush
+
+    document.querySelectorAll('.sticker-btn').forEach( elBtn => {
+        const isSelected = (shape === 'sticker' && elBtn.dataset.id === stickerId)
+        
+        elBtn.classList.toggle('sticker-selected', isSelected)
+    })
 }
 
 function onSetText(el) {
@@ -80,6 +120,7 @@ function onUpdateFontSize(el) {
 function onRemoveText() {
     removeDrawing()
     renderBrushProperties()
+    renderStickersSelection()
     renderMeme()
 }
 
@@ -130,6 +171,7 @@ function onDown(ev) {
 
     selectDrawing(idx)
     renderBrushProperties()
+    renderStickersSelection()
     renderMeme()
 }
 

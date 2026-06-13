@@ -49,6 +49,31 @@ canvas {
     grid-column: span 3;
 }
 
-.stickers-container > * {
+.stickers-container {
     grid-column: 1 / -1;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    justify-content: center;
+}
+
+.sticker-btn {
+    font-size: 1.6rem;
+    line-height: 1;
+    padding: .25rem .35rem;
+
+    background: none;
+    border: 2px solid transparent;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.sticker-btn:hover {
+    background-color: #e6f3ff;
+}
+
+.sticker-btn.sticker-selected {
+    border-color: #0099ff;
+    background-color: #e6f3ff;
 }
