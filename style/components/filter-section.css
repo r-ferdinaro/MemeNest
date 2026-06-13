@@ -13,17 +13,55 @@
 
 .tags-container {
     grid-column: 4;
-    justify-self: end;
+    overflow: hidden;
 
     display: grid;
     grid-auto-flow: column;
+    justify-content: end;
     gap: var(--options-gap);
 
     text-align: center;
 }
 
+.tags-container > a {
+    white-space: nowrap;
+    user-select: none;
+}
+
+.tags-container > a.tag-selected {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
 .expand {
     grid-column: 5;
+}
+
+.expand.hide {
+    display: none;
+}
+
+.tags-expanded {
+    display: none;
+    flex-wrap: wrap;
+    gap: var(--options-gap);
+
+    margin-bottom: var(--margin);
+    padding: var(--margin);
+
+    border-radius: 10px;
+    background-color: #f0f0f0;
+
+    text-align: center;
+}
+
+.tags-expanded.open {
+    display: flex;
+}
+
+.tags-expanded > a.tag-selected {
+    font-size: 1.3em;
+    font-weight: bold;
 }
 
 .filter-btn {
