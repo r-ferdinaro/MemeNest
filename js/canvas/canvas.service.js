@@ -3,20 +3,23 @@
 // router to call correct function when loading canvas
 function loadItem() {
     const { itemType, itemId } = gSelectedItem
-    const { selectedDrawingIdx, selectedImgId } = gMeme
 
     if (!itemId && restoreEditorState()) {
         gEditorReady = true
         resetBrush()
 
-        if (selectedDrawingIdx !== null && selectedDrawingIdx !== undefined) {
-            selectDrawing(selectedDrawingIdx)
+        if (gMeme.selectedDrawingIdx !== null && gMeme.selectedDrawingIdx !== undefined) {
+            selectDrawing(gMeme.selectedDrawingIdx)
         }
 
-        const imageObj = getItemById('image', selectedImgId)
-        
-        (imageObj) ? renderItemToCanvas(imageObj) : renderMeme()
+        const imageObj = getItemById('image', gMeme.selectedImgId)
+        if (imageObj) {
+            renderItemToCanvas(imageObj)
+        } else {
+            renderMeme()
+        }
         return
+        
     }
 
     gEditorReady = true
