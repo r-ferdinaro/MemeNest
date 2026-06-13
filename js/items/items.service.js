@@ -76,6 +76,34 @@ function saveMeme(imgUrl) {
     return (gMeme.id) ? _updateMeme(imgUrl) : _saveNewMeme(imgUrl)
 }
 
+function saveEditorState() {
+    const { itemId, itemType } = gSelectedItem
+
+    const editorData = {
+        meme: gMeme,
+        selectedItem: { 
+            itemId,
+            itemType
+        }
+    }
+
+    saveToStorage('editorDB', editorData)
+}
+
+function restoreEditorState() {
+    const saved = loadFromStorage('editorDB')
+  
+    if (!saved || !saved.meme) return false
+  
+    gMeme = saved.meme
+    gSelectedItem = {
+        ...saved.selectedItem,
+        elImg: null
+      }
+  
+    return true
+}
+
 // // TODO: support uploads in a future PR.
 // function uploadImg(url, keywords) {
 //     // TODO: add a property to gImgs to differ between local/uploaded images. 
