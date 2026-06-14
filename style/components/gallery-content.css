@@ -1,17 +1,23 @@
 .gallery-content {
-    column-width: 150px;
-    column-gap: 20px;
-         
+    column-width: 9.375em;
+    column-gap: var(--margin);
+
     width: 100%;
 
-    margin-bottom: 20px;
+    margin-bottom: var(--margin);
 }
 
 .gallery-content img {
-    break-inside: avoid; 
-    
+    break-inside: avoid;
+
     width: 100%;
-    
+
     margin-bottom: var(--margin);
-    border-radius: 10px;
+    border-radius: var(--radius-small);
+
+    transition: box-shadow var(--transition-duration);
+}
+
+.gallery-content img:hover {
+    box-shadow: 0 0 0 2px var(--clr-accent);
 }

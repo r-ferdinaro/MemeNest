@@ -26,6 +26,16 @@ function renderPageContent() {
     // hide/show sections, based on the selected page using the hide class
     pages.forEach( page => document.querySelector(`.${page}`).classList.toggle('hide', page !== activePage))
 
+    // mark active nav link
+    document.querySelectorAll('.main-nav a[data-uri]').forEach(a => {
+        a.classList.toggle('nav-active', a.dataset.uri === page)
+    })
+
+    // show page's label in Mobile view
+    const elPageLabel = document.querySelector('.current-page-label')
+    
+    if (elPageLabel) elPageLabel.textContent = page.charAt(0).toUpperCase() + page.slice(1)
+
     // render gallery content & tags based on gallery type
     if (['gallery', 'memes'].includes(page)) {
         document.querySelector('.gallery-content').innerHTML = getGalleryElements()
@@ -127,7 +137,7 @@ function renderTags() {
     const orderedTags = orderTags()
 
     // render the first 5 tags - in web view (hidden in Mobile view)
-    elContainer.innerHTML = orderedTags.slice(0, 5).map(getTagElement).join('')
+    elContainer.innerHTML = orderedTags.slice(0, 4).map(getTagElement).join('')
     // render all tags to panel
     elPanel.innerHTML = orderedTags.map(getTagElement).join('')
     elExpand.classList.toggle('hide', !orderedTags.length)
@@ -207,12 +217,19 @@ function setQueryParams() {
 
 // Show/hide nav/filter menu
 function onToggleMenu(el) {
-    const menuTypeClass = el.classList.contains('filter-btn') ? 'filter' : 'nav'
-    document.body.classList.add('menu-open', `${menuTypeClass}`)
+    const screen = document.querySelector('.main-screen')
+    const isFilter = el.classList.contains('filter-btn')
+    const target = document.querySelector(isFilter ? '.tags-expanded' : '.main-nav')
+    const isOpen = target.classList.contains('open')
+
+    target.classList.toggle('open', !isOpen)
+    screen.classList.toggle('open', !isOpen)
 }
 
 // Close nav/filter menu
 function onCloseMenu() {
-    document.body.classList.remove('menu-open', 'filter', 'nav')
+    document.querySelector('.main-nav').classList.remove('open')
+    document.querySelector('.tags-expanded').classList.remove('open')
+    document.querySelector('.main-screen').classList.remove('open')
 }
 

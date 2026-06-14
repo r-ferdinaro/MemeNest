@@ -9,7 +9,6 @@
 .main-nav > ul {
     grid-auto-flow: column;
     align-items: center;
-    gap: var(--options-gap);
 }
 
 .main-nav > ul a {
@@ -21,11 +20,37 @@
 
     padding-inline: 1em;
 
-    color: black;
+    transition: color var(--transition-duration);
 }
 
 .main-nav > ul > li:last-child a {
     padding-inline-end: 0;
+}
+
+.main-nav > ul > li > a {
+    position: relative;
+}
+
+.main-nav > ul > li > a:hover,
+.main-nav > ul > li > a.nav-active {
+    color: var(--clr-accent);
+}
+
+.main-nav > ul > li > a.nav-active::after {
+    content: '';
+
+    position: absolute;
+    bottom: 0;
+    inset-inline: 1em;
+    
+    height: 2px;
+    
+    border-radius: 1px;
+    background-color: var(--clr-accent);
+}
+
+.main-nav > ul > li:last-child > a.nav-active::after {
+    inset-inline-end: 0;
 }
 
 .main-screen {
@@ -33,7 +58,7 @@
     pointer-events: none;
 }
 
-.app.menu-open .main-screen {
+.main-screen.open {
     opacity: 1;
     pointer-events: auto;
 }
@@ -45,6 +70,13 @@
     border: none;
     background-color: transparent;
     font-size: larger;
-    color: black;
+    color: var(--clr-txt);
     cursor: pointer;
+
+    transition: color var(--transition-duration);
+}
+
+.nav-btn:hover,
+.main-nav.open ~ .nav-btn {
+    color: var(--clr-accent);
 }

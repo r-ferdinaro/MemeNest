@@ -64,7 +64,7 @@ function getKeywords(page) {
     return keywordMap
 }
 
-// TODO: use this to get desired image/meme from storage
+// get image/meme from storage
 function getItemById(type, id) {
     const dataSource = (type === 'image') ? gImgs : gMemes
     return dataSource.find(item => id === item.id)
@@ -103,18 +103,6 @@ function restoreEditorState() {
   
     return true
 }
-
-// // TODO: support uploads in a future PR.
-// function uploadImg(url, keywords) {
-//     // TODO: add a property to gImgs to differ between local/uploaded images. 
-//     // If local image - grab from files | if uploaded image - save to localStorage as dataURL.
-//     // Will require getGalleryElements to convert the dataURL to an image and insert into img element properly. 
-//     const img = _createImg(url, keywords)
-    
-//     gImgs.unshift(img)
-//     _saveImgsToStorage()
-//     return pic
-// }
 
 // Private functions
 

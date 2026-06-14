@@ -1,7 +1,7 @@
 .main-layout {
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: minmax(1rem, 1fr) minmax(auto, 95%) minmax(1rem, 1fr);
+    grid-template-columns: minmax(auto, 1fr) minmax(auto, 95%) minmax(auto, 1fr);
 }
 
 .app.main-layout {
@@ -22,5 +22,8 @@
 
 .main-content-container {
     grid-row: 2;
+    
+    justify-items: center;
+    
     min-height: 0;
 }

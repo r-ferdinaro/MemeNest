@@ -245,7 +245,7 @@ function highlightDrawing(drawing) {
     const { x, y, width, height } = getDrawingBorders(drawing)
 
     // set highlight properties
-    gCtx.strokeStyle = '#0099ff'
+    gCtx.strokeStyle = '#8B5CF6'
     gCtx.lineWidth = 2
 
     // draw highlighting border
@@ -348,7 +348,6 @@ function selectSticker(stickerId) {
     addSticker(stickerId)
 }
 
-// leave sticker mode: reset the brush back to text and drop any selection
 function clearStickerSelection() {
     gBrush.shape = 'text'
     gBrush.stickerId = null
