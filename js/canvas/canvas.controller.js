@@ -81,7 +81,6 @@ function odAddNewTextDrawing() {
     gBrush.stickerId = null
     addText()
     renderBrushProperties()
-    renderStickersSelection()
     renderMeme()
 }
 
@@ -89,7 +88,6 @@ function odAddNewTextDrawing() {
 function onSelectSticker(stickerId) {
     selectSticker(stickerId)
     renderBrushProperties()
-    renderStickersSelection()
     renderMeme()
 }
 
@@ -107,18 +105,6 @@ function renderStickers() {
     )
 
     elContainer.innerHTML = strHtml
-    renderStickersSelection()
-}
-
-// highlight active sticker in palette
-function renderStickersSelection() {
-    const { shape, stickerId } = gBrush
-
-    document.querySelectorAll('.sticker-btn').forEach( elBtn => {
-        const isSelected = (shape === 'sticker' && elBtn.dataset.id === stickerId)
-        
-        elBtn.classList.toggle('sticker-selected', isSelected)
-    })
 }
 
 function onSetText(el) {
@@ -135,7 +121,6 @@ function onUpdateFontSize(el) {
 function onRemoveText() {
     removeDrawing()
     renderBrushProperties()
-    renderStickersSelection()
     renderMeme()
 }
 
@@ -186,7 +171,6 @@ function onDown(ev) {
 
     selectDrawing(idx)
     renderBrushProperties()
-    renderStickersSelection()
     renderMeme()
 }
 

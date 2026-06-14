@@ -140,21 +140,25 @@ function resizeCanvas() {
 // Get event positions on Web & Mobile
 function getEvPos(ev) {
     const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
-
+    const rect = gElCanvas.getBoundingClientRect()
+    let clientX, clientY
+    
     if (TOUCH_EVENTS.includes(ev.type)) {
         ev.preventDefault()
         const touch = ev.targetTouches[0]
-        const rect = gElCanvas.getBoundingClientRect()
-        
-        return {
-            x: touch.clientX - rect.left,
-            y: touch.clientY - rect.top,
-        }
+        clientX = touch.clientX
+        clientY = touch.clientY
     } else {
-        return {
-            x: ev.offsetX,
-            y: ev.offsetY,
-        }
+        clientX = ev.clientX
+        clientY = ev.clientY
+    }
+
+    const scaleX = gElCanvas.width / rect.width
+    const scaleY = gElCanvas.height / rect.height
+
+    return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top) * scaleY,
     }
 }
 
