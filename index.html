@@ -10,7 +10,7 @@
     <div class="main-screen" onclick="onCloseMenu()"></div>
 
     <header class="main-header main-layout full align-center">
-        <div class="main-logo">MemeNest</div>
+        <a class="main-logo" onclick="onPageChange(event)" href="" data-uri="gallery">MemeNest</a>
         <nav class="main-nav">
             <ul class="grid">
                 <li><a onclick="onPageChange(event)" href="" data-uri="gallery">Gallery</a></li>
@@ -18,6 +18,7 @@
                 <li><a onclick="onPageChange(event)" href="" data-uri="memes">Memes</a></li>
             </ul>
         </nav>
+        <span class="current-page-label"></span>
         <button class="nav-btn" onclick="onToggleMenu(this)"><i class="fa-solid fa-bars"></i></button>
     </header>
     
@@ -45,8 +46,8 @@
             <div class="canvas-tools grid">
                 <div class="text-tools">
                     <input name="text-input" placeholder="Set text" class="text-input" type="text" oninput="onSetText(this)">
-                    <button onclick="odAddNewTextDrawing()"><i class="fa-regular fa-square-plus"></i></button>
-                    <button onclick="onRemoveText()"><i class="fa-solid fa-trash-can"></i></button>
+                    <button class="add-text-drawing" onclick="odAddNewTextDrawing()"><i class="fa-solid fa-square-plus"></i></button>
+                    <button class="remove-drawing" onclick="onRemoveText()"><i class="fa-solid fa-trash-can"></i></button>
                 </div>
 
                 <div class="text-styling">
@@ -58,18 +59,22 @@
                         <option value="futura">Futura</option>
                     </select>
                     <div class="font-size-container">
+                        <span>Font size <span class="font-size-value" id="fontSizeValue">40</span></span>
                         <input class="font-size-slider" type="range" min="20" max="60" value="40" id="fontSizeSlide" oninput="onUpdateFontSize(this)">
-                        <p>Font size <span class="font-size-value" id="fontSizeValue">40</span></p>
                     </div>
-                    <input class="stroke-color" type="color" value="#000000" onchange="onSetStrokeColor(this)">
-                    <input class="fill-color" type="color" value="#ffffff" onchange="onSetFontColor(this)">
+                    <div class="font-colors-container">
+                        <span>Stroke color</span>
+                        <input class="stroke-color" type="color" value="#000000" onchange="onSetStrokeColor(this)">
+                        <span>Fill color</span>
+                        <input class="fill-color" type="color" value="#ffffff" onchange="onSetFontColor(this)">
+                    </div>
                 </div>
 
                 <div class="stickers-container"></div>
                 
                 <div class="export-container">
-                    <button class="save-meme" onclick="onSaveMeme()">Save meme <i class="fa-solid fa-floppy-disk"></i></button>
-                    <a href="#" class="download-meme btn" onclick="onDownloadMeme(this)" download="meme.jpg">Download meme<i class="fa-solid fa-download"></i></a>
+                    <button class="save-meme" onclick="onSaveMeme()">Save <i class="fa-solid fa-floppy-disk"></i></button>
+                    <a href="#" class="download-meme btn" onclick="onDownloadMeme(this)" download="meme.jpg">Download <i class="fa-solid fa-download"></i></a>
                     <form method="POST" enctype="multipart/form-data" onsubmit="onUploadImg(event)">
                         <input name="img" id="imgData" type="hidden" />
                         <button type="submit" class="share-meme btn">Share <i class="fa-brands fa-facebook"></i></button>

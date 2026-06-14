@@ -1,7 +1,6 @@
 'use strict';
 
 // Get images/memes from storage to img tags
-// TODO: support memes
 function getGalleryElements() {
     const { page, filterBy } = gQueryParams
     const contentArray = getItems(page, filterBy)

@@ -1,8 +1,14 @@
 .main-header {
     grid-row: 1;
     display: grid;
+
+    border-bottom: 1px solid var(--clr-border);
 }
 
 .main-header > * {
     grid-row: 1;
+}
+
+.current-page-label {
+    display: none;
 }

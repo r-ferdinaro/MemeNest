@@ -1,21 +1,30 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html {
-    font-family: Inter-Regular, sans-serif;
+    scrollbar-width: none;
 }
 
-body {    
-    margin: 0;
-    height: 100vh;
+html::-webkit-scrollbar {
+    display: none;
+}
 
-    font-size: 1rem;
-    line-height: 1.25;
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+  
+    background-color: var(--clr-bg-base);
+
+    font-family: Inter-Regular, sans-serif;
+    color: var(--clr-txt);
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
+  color: var(--clr-txt);
 }
 
 img {
@@ -50,6 +59,7 @@ button, .btn {
     cursor: pointer;
 }
 
-[class^="fa-"], [class*=" fa-"] {
+[class^="fa-"],
+[class*=" fa-"] {
     height: 100%;
 }

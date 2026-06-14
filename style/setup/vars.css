@@ -1,15 +1,28 @@
 :root {
     /* Text colors */
-    
+    --clr-txt: #A09AB8;
+    --clr-txt-muted: #5C5870;
+    --clr-accent: #8B5CF6;
+    --clr-danger: #c62828;
 
     /* Background colors */
-    
-    
+    --clr-bg-base: #121212;
+    --clr-bg-surface: #16161A;
+    --clr-bg-elevated: #1E1E24;
+    --clr-bg-input: #26262E;
+
+    /* Borders */
+    --clr-border: #ffffff12;
+
+    /* Border radius */
+    --radius-small: 0.625em;
+    --radius: 1.25em;
+
     /* Dimensions */
     --options-gap: .625em;
     --margin: 1.25em;
-    
+
     /* Timing */
     --transition-duration: .3s;
-    
+
 }

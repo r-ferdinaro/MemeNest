@@ -5,5 +5,10 @@
     font-size: 2.5em;
     padding: .5rem 0;
 
+    font-weight: 700;
+    background: linear-gradient(106.94deg, #C4B5FD 0%, #818CF8 100%);
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
     cursor: pointer;
 }

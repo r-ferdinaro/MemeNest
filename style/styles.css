@@ -9,7 +9,6 @@
 
 /*COMPONENTS*/
 @import url("components/canvas.css");
-@import url("components/editor-tools.css");
 @import url("components/filter-section.css");
 @import url("components/gallery-content.css");
 @import url("components/main-header.css");
@@ -17,6 +16,5 @@
 @import url("components/main-nav.css");
 @import url("components/ui.css");
 
-
-/*mq*/
+/*MQ*/
 @import url("setup/mq.css");
