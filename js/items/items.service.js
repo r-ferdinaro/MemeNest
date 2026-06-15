@@ -104,6 +104,7 @@ function restoreEditorState() {
     return true
 }
 
+
 // Private functions
 
 // Create image object
@@ -205,11 +206,11 @@ function _createImages() {
             },
             {
               url: 'images/11.jpg',
-              keywords: ['cat', 'shocked', 'meme']
+              keywords: ['basketball', 'players', 'fight']
             },
             {
               url: 'images/12.jpg',
-              keywords: ['dog', 'smiling', 'close-up']
+              keywords: ['man', 'pointing', 'fingers']
             },
             {
               url: 'images/13.jpg',
@@ -217,103 +218,103 @@ function _createImages() {
             },
             {
               url: 'images/14.jpg',
-              keywords: ['grumpy cat', 'frown', 'meme']
+              keywords: ['morpheus', 'matrix', 'meme']
             },
             {
               url: 'images/15.jpg',
-              keywords: ['minions', 'yellow', 'animation']
+              keywords: ['boromir', 'lord of the rings', 'meme']
             },
             {
               url: 'images/16.jpg',
-              keywords: ['sloth', 'smiling', 'animal']
+              keywords: ['picard', 'star trek', 'laughing']
             },
             {
               url: 'images/17.jpg',
-              keywords: ['drake', 'no', 'meme']
+              keywords: ['putin', 'politics', 'speaking']
             },
             {
               url: 'images/18.jpg',
-              keywords: ['baby', 'crying', 'sad']
+              keywords: ['toy story', 'buzz lightyear', 'everywhere']
             },
             {
               url: 'images/19.jpg',
-              keywords: ['patrick star', 'evil', 'meme']
+              keywords: ['guy', 'shocked', 'meme']
             },
             {
               url: 'images/20.jpg',
-              keywords: ['dog', 'side-eye', 'meme']
+              keywords: ['trump', 'politics', 'pointing']
             },
             {
               url: 'images/21.jpg',
-              keywords: ['drake', 'yes', 'meme']
+              keywords: ['aliens', 'meme', 'history']
             },
             {
               url: 'images/22.jpg',
-              keywords: ['dog', 'burning house', 'fine']
+              keywords: ['dr evil', 'air quotes', 'meme']
             },
             {
               url: 'images/23.jpg',
-              keywords: ['distracted boyfriend', 'jealousy', 'meme']
+              keywords: ['kids', 'dancing', 'happy']
             },
             {
               url: 'images/24.jpg',
-              keywords: ['spider-man', 'pointing', 'meme']
+              keywords: ['trump', 'politics', 'pointing']
             },
             {
               url: 'images/25.jpg',
-              keywords: ['cat', 'crying', 'thumbs-up']
+              keywords: ['baby', 'surprised', 'eyes']
             },
             {
               url: 'images/26.jpg',
-              keywords: ['doge', 'shiba inu', 'meme']
+              keywords: ['puppy', 'dog', 'cute']
             },
             {
               url: 'images/27.jpg',
-              keywords: ['batman', 'slapping', 'robin']
+              keywords: ['obama', 'laughing', 'close-up']
             },
             {
               url: 'images/28.jpg',
-              keywords: ['woman yelling', 'cat', 'table']
+              keywords: ['basketball', 'players', 'fight']
             },
             {
               url: 'images/29.jpg',
-              keywords: ['roll safe', 'smart', 'thinking']
+              keywords: ['leonardo dicaprio', 'drinking', 'meme']
             },
             {
               url: 'images/30.jpg',
-              keywords: ['pepe the frog', 'sad', 'meme']
+              keywords: ['morpheus', 'matrix', 'meme']
             },
             {
               url: 'images/31.jpg',
-              keywords: ['hide the pain', 'harold', 'smile']
+              keywords: ['boromir', 'lord of the rings', 'meme']
             },
             {
               url: 'images/32.jpg',
-              keywords: ['disaster girl', 'fire', 'smirk']
+              keywords: ['oprah', 'excited', 'meme']
             },
             {
               url: 'images/33.jpg',
-              keywords: ['kermit the frog', 'tea', 'business']
+              keywords: ['picard', 'star trek', 'laughing']
             },
             {
               url: 'images/34.jpg',
-              keywords: ['futurama', 'fry', 'money']
+              keywords: ['putin', 'politics', 'speaking']
             },
             {
               url: 'images/35.jpg',
-              keywords: ['spongebob', 'mocking', 'meme']
+              keywords: ['toy story', 'buzz lightyear', 'everywhere']
             },
             {
               url: 'images/36.jpg',
-              keywords: ['buzz lightyear', 'woody', 'everywhere']
+              keywords: ['puppies', 'dogs', 'licking']
             },
             {
               url: 'images/37.jpg',
-              keywords: ['dog', 'chemistry', 'science']
+              keywords: ['baby', 'puppy', 'sleeping']
             },
             {
               url: 'images/38.jpg',
-              keywords: ['cat', 'smudge', 'salad']
+              keywords: ['cat', 'sleeping', 'keyboard']
             },
             {
               url: 'images/39.jpg',
