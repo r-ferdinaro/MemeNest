@@ -104,7 +104,6 @@ function restoreEditorState() {
     return true
 }
 
-
 // Private functions
 
 // Create image object
@@ -186,7 +185,7 @@ function _createImages() {
             },
             {
               url: 'images/6.jpg',
-              keywords: ['aliens', 'meme', 'history']
+              keywords: ['aliens', 'history']
             },
             {
               url: 'images/7.jpg',
@@ -194,7 +193,7 @@ function _createImages() {
             },
             {
               url: 'images/8.jpg',
-              keywords: ['willy wonka', 'meme', 'smiling']
+              keywords: ['willy wonka', 'smiling']
             },
             {
               url: 'images/9.jpg',
@@ -214,15 +213,15 @@ function _createImages() {
             },
             {
               url: 'images/13.jpg',
-              keywords: ['leonardo dicaprio', 'drinking', 'meme']
+              keywords: ['leonardo dicaprio', 'drinking']
             },
             {
               url: 'images/14.jpg',
-              keywords: ['morpheus', 'matrix', 'meme']
+              keywords: ['morpheus', 'matrix']
             },
             {
               url: 'images/15.jpg',
-              keywords: ['boromir', 'lord of the rings', 'meme']
+              keywords: ['boromir', 'lord of the rings']
             },
             {
               url: 'images/16.jpg',
@@ -238,7 +237,7 @@ function _createImages() {
             },
             {
               url: 'images/19.jpg',
-              keywords: ['guy', 'shocked', 'meme']
+              keywords: ['guy', 'shocked']
             },
             {
               url: 'images/20.jpg',
@@ -246,11 +245,11 @@ function _createImages() {
             },
             {
               url: 'images/21.jpg',
-              keywords: ['aliens', 'meme', 'history']
+              keywords: ['aliens', 'history']
             },
             {
               url: 'images/22.jpg',
-              keywords: ['dr evil', 'air quotes', 'meme']
+              keywords: ['dr evil', 'air quotes']
             },
             {
               url: 'images/23.jpg',
@@ -278,19 +277,19 @@ function _createImages() {
             },
             {
               url: 'images/29.jpg',
-              keywords: ['leonardo dicaprio', 'drinking', 'meme']
+              keywords: ['leonardo dicaprio', 'drinking']
             },
             {
               url: 'images/30.jpg',
-              keywords: ['morpheus', 'matrix', 'meme']
+              keywords: ['morpheus', 'matrix']
             },
             {
               url: 'images/31.jpg',
-              keywords: ['boromir', 'lord of the rings', 'meme']
+              keywords: ['boromir', 'lord of the rings']
             },
             {
               url: 'images/32.jpg',
-              keywords: ['oprah', 'excited', 'meme']
+              keywords: ['oprah', 'excited']
             },
             {
               url: 'images/33.jpg',
