@@ -81,6 +81,17 @@
         color: var(--clr-txt);
     }
 
+    .main-nav > ul > li > a.nav-active::after {
+        display: none;
+    }
+
+    .main-nav > ul > li > a.nav-active {
+        text-decoration: underline;
+        text-decoration-color: var(--clr-accent);
+        text-decoration-thickness: 0.125em;
+        text-underline-offset: 0.3em;
+    }
+
     /* Filter drawer */
     .tags-expanded,
     .tags-expanded.open {
