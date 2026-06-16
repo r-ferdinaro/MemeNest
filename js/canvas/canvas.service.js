@@ -187,7 +187,7 @@ function renderMeme() {
         if (idx === selectedDrawingIdx) highlightDrawing(drawing)
     }
 
-    if (gEditorReady) saveEditorState()
+    if (gEditorReady && !gIsMouseDown) saveEditorState()
 }
 
 // draw a drawing into canvas
