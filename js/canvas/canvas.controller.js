@@ -91,22 +91,6 @@ function onSelectSticker(stickerId) {
     renderMeme()
 }
 
-// build the emoji sticker palette
-function renderStickers() {
-    const elContainer = document.querySelector('.stickers-container')
-    
-    if (!elContainer) return
-
-    let strHtml = ''
-    const stickers = getStickers()
-    
-    stickers.forEach( sticker =>
-        strHtml += `<button class="sticker-btn" data-id="${sticker.id}" onclick="onSelectSticker('${sticker.id}')">${sticker.emoji}</button>`
-    )
-
-    elContainer.innerHTML = strHtml
-}
-
 function onSetText(el) {
     setSelectedDrawingText(el.value)
     renderMeme()
@@ -137,6 +121,22 @@ function onSetFontColor(el) {
 function onSetStrokeColor(el) {
     updateBrush('strokeColor', el.value)
     renderMeme()
+}
+
+// build the emoji sticker palette
+function renderStickers() {
+    const elContainer = document.querySelector('.stickers-container')
+    
+    if (!elContainer) return
+
+    let strHtml = ''
+    const stickers = getStickers()
+    
+    stickers.forEach( sticker =>
+        strHtml += `<button class="sticker-btn" data-id="${sticker.id}" onclick="onSelectSticker('${sticker.id}')">${sticker.emoji}</button>`
+    )
+
+    elContainer.innerHTML = strHtml
 }
 
 function renderBrushProperties() {
