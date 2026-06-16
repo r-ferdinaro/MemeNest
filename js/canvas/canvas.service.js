@@ -187,7 +187,7 @@ function renderMeme() {
         if (idx === selectedDrawingIdx) highlightDrawing(drawing)
     }
 
-    if (gEditorReady) saveEditorState()
+    if (gEditorReady && !gIsMouseDown) saveEditorState()
 }
 
 // draw a drawing into canvas
@@ -312,7 +312,7 @@ function addSticker(stickerId) {
     const drawing = {
         shape: 'sticker',
         stickerId,
-        size: 50,
+        size: gBrush.fontSize,
         pos: {x, y}
     }
     
@@ -382,6 +382,7 @@ function selectDrawing(idx) {
     if (drawing.shape === 'sticker') {
         gBrush.shape = 'sticker'
         gBrush.stickerId = drawing.stickerId
+        gBrush.fontSize = drawing.size
         gBrush.txt = ''
         return
     }
@@ -417,9 +418,17 @@ function updateBrush(key, value) {
     const { drawings, selectedDrawingIdx: idx } = gMeme
     gBrush[key] = value
     if (idx === null) return
+
+    const drawing = drawings[idx]
+
+    if (key === 'fontSize') {
+        drawing.size = value
+        return
+    }
+
     // text styling doesn't apply to stickers
-    if (drawings[idx].shape === 'sticker') return
-    drawings[idx][key === 'fontSize' ? 'size' : key] = value
+    if (drawing.shape === 'sticker') return
+    drawing[key] = value
 }
 
 // update drawing's position

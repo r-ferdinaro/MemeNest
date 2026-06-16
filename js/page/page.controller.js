@@ -136,7 +136,7 @@ function renderTags() {
 
     const orderedTags = orderTags()
 
-    // render the first 5 tags - in web view (hidden in Mobile view)
+    // render the first 4 tags - in web view (hidden in Mobile view)
     elContainer.innerHTML = orderedTags.slice(0, 4).map(getTagElement).join('')
     // render all tags to panel
     elPanel.innerHTML = orderedTags.map(getTagElement).join('')
@@ -203,7 +203,7 @@ function setQueryParams() {
     const { page = 'gallery', filterBy } = gQueryParams
     
     queryParams.set('page', page)
-    if (['gallery', 'editor'].includes(page)) {
+    if (['gallery', 'memes', 'editor'].includes(page)) {
         if (filterBy) queryParams.set('filterBy', filterBy)
     }
     

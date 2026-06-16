@@ -188,4 +188,5 @@ function onMove(ev) {
 
 function onUp() {
 	gIsMouseDown = false
+    if (gEditorReady) saveEditorState()
 }
