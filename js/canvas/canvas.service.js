@@ -2,7 +2,7 @@
 
 // router to call correct function when loading canvas
 function loadItem() {
-    const { itemType, itemId } = gSelectedItem
+    let { itemType, itemId } = gSelectedItem
 
     if (!itemId && restoreEditorState()) {
         gEditorReady = true
