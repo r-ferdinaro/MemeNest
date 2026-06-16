@@ -49,6 +49,8 @@
     justify-content: end;
     gap: var(--options-gap);
 
+    padding: .2em 0;
+
     text-align: center;
 }
 
@@ -131,7 +133,6 @@
 }
 
 .tags-expanded > a.tag-selected {
-    font-size: 1.3em;
     font-weight: bold;
 }
 
