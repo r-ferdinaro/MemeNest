@@ -166,7 +166,9 @@ function onDown(ev) {
         const y = pos.y - drawingPos.y
 
         gOffsetPos = {x,y}
-    gIsMouseDown = true
+        gIsMouseDown = true
+        // grabbing a drawing - show the "grabbing" cursor
+        gElCanvas.style.cursor = 'grabbing'
     }
 
     selectDrawing(idx)
@@ -174,19 +176,29 @@ function onDown(ev) {
     renderMeme()
 }
 
-// drag drawing and store it's original positions
+// drag the selected drawing, or update the cursor when just hovering
 function onMove(ev) {
-    if (!gIsMouseDown || gMeme.selectedDrawingIdx === null) return
-    const { x: offsetX, y: offsetY} = gOffsetPos
     const pos = getEvPos(ev)
-    const x = pos.x - offsetX
-    const y = pos.y - offsetY
 
-    moveSelectedDrawing({x, y})
-    renderMeme()
+    if (gIsMouseDown && gMeme.selectedDrawingIdx !== null) {
+        const { x: offsetX, y: offsetY} = gOffsetPos
+        const x = pos.x - offsetX
+        const y = pos.y - offsetY
+
+        moveSelectedDrawing({x, y})
+        renderMeme()
+        return
+    }
+
+    const idx = getDrawingIdxAtPos(pos)
+
+    gElCanvas.style.cursor = (idx !== null) ? 'grab' : 'default'
 }
 
 function onUp() {
 	gIsMouseDown = false
+
+    gElCanvas.style.cursor = 'grab'
+    
     if (gEditorReady) saveEditorState()
 }
