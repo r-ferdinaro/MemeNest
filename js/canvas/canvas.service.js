@@ -190,27 +190,6 @@ function renderMeme() {
     if (gEditorReady) saveEditorState()
 }
 
-// capture the canvas as dataURL, save to storage, and sync state
-function saveAndSyncMeme() {
-    const imgUrl = getMemeImgUrl()
-    const savedMeme = saveMeme(imgUrl)
-
-    gMeme.id = gSelectedItem.itemId = savedMeme.id
-    gSelectedItem.itemType = 'meme'
-}
-
-// save as image in dataURL format
-function getMemeImgUrl() {
-    // clear drawing selections and re-render canvas
-    gMeme.selectedDrawingIdx = null
-    renderMeme()
-
-    // save edited canvas to dataURL format
-    const imgUrl = gElCanvas.toDataURL()
-
-    return imgUrl
-}
-
 // draw a drawing into canvas
 function drawText(drawing) {
     const { txt, size, font, fillColor, strokeColor, pos } = drawing
@@ -259,6 +238,7 @@ function highlightDrawing(drawing) {
     // reset line properties to none
     gCtx.setLineDash([])
 }
+
 // get drawing start and end positions (x and y)
 function getDrawingBorders(drawing) {
     const { size, pos } = drawing
@@ -387,17 +367,6 @@ function bringDrawingToFront(idx) {
     return 0
 }
 
-// update brush and selected drawing text
-function setSelectedDrawingText(txt) {
-    const { drawings, selectedDrawingIdx: idx } = gMeme
-    gBrush.txt = txt
-
-    if (idx === null) return
-    // stickers have no editable text
-    if (drawings[idx].shape === 'sticker') return
-    drawings[idx].txt = txt
-}
-
 // select/deselect drawing and sync all brush properties from it
 function selectDrawing(idx) {
     gMeme.selectedDrawingIdx = idx
@@ -432,18 +401,15 @@ function selectDrawing(idx) {
     }
 }
 
-// remove selected drawing from meme
-function removeDrawing() {
+// update brush and selected drawing text
+function setSelectedDrawingText(txt) {
     const { drawings, selectedDrawingIdx: idx } = gMeme
-    
-    if (idx === null) return
+    gBrush.txt = txt
 
-    drawings.splice(idx, 1)
-    gMeme.selectedDrawingIdx = null
-    gBrush.txt = ''
-    // leave sticker mode after deleting a drawing
-    gBrush.shape = 'text'
-    gBrush.stickerId = null
+    if (idx === null) return
+    // stickers have no editable text
+    if (drawings[idx].shape === 'sticker') return
+    drawings[idx].txt = txt
 }
 
 // update a brush and selected drawing property
@@ -462,6 +428,41 @@ function moveSelectedDrawing(pos) {
     if (idx === null) return
 
     gMeme.drawings[idx].pos = pos
+}
+
+// remove selected drawing from meme
+function removeDrawing() {
+    const { drawings, selectedDrawingIdx: idx } = gMeme
+    
+    if (idx === null) return
+
+    drawings.splice(idx, 1)
+    gMeme.selectedDrawingIdx = null
+    gBrush.txt = ''
+    // leave sticker mode after deleting a drawing
+    gBrush.shape = 'text'
+    gBrush.stickerId = null
+}
+
+// capture the canvas as dataURL, save to storage, and sync state
+function saveAndSyncMeme() {
+    const imgUrl = getMemeImgUrl()
+    const savedMeme = saveMeme(imgUrl)
+
+    gMeme.id = gSelectedItem.itemId = savedMeme.id
+    gSelectedItem.itemType = 'meme'
+}
+
+// save as image in dataURL format
+function getMemeImgUrl() {
+    // clear drawing selections and re-render canvas
+    gMeme.selectedDrawingIdx = null
+    renderMeme()
+
+    // save edited canvas to dataURL format
+    const imgUrl = gElCanvas.toDataURL()
+
+    return imgUrl
 }
 
 // upload meme dataURL to Cloudinary and call onSuccess with the public URL

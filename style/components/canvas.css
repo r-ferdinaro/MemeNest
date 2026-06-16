@@ -110,6 +110,40 @@ canvas {
     color: var(--clr-danger);
 }
 
+.text-styling {
+    gap: 1em
+}
+
+.text-styling > select {
+    justify-self: stretch;
+
+    height: 2.1875em;
+
+    border-radius: var(--radius-small);
+    border: 1px solid var(--clr-border);
+    padding: 0 1.625em 0 0.875em;
+    background: var(--clr-bg-elevated);
+
+    color: var(--clr-txt);
+    appearance: none;
+
+    transition:
+        border-color var(--transition-duration),
+        color var(--transition-duration);
+}
+
+.text-styling > select:hover,
+.text-styling > select:focus {
+    border-color: var(--clr-accent);
+
+    color: var(--clr-accent);
+    outline: none;
+}
+
+.font-size-container {
+    justify-self: stretch;
+}
+
 .font-size-slider {
     appearance: none;
 
@@ -179,40 +213,6 @@ canvas {
 
     gap: .5rem;
     justify-content: center;
-}
-
-.text-styling {
-    gap: 1em
-}
-
-.text-styling > select {
-    justify-self: stretch;
-
-    height: 2.1875em;
-
-    border-radius: var(--radius-small);
-    border: 1px solid var(--clr-border);
-    padding: 0 1.625em 0 0.875em;
-    background: var(--clr-bg-elevated);
-
-    color: var(--clr-txt);
-    appearance: none;
-
-    transition:
-        border-color var(--transition-duration),
-        color var(--transition-duration);
-}
-
-.text-styling > select:hover,
-.text-styling > select:focus {
-    border-color: var(--clr-accent);
-
-    color: var(--clr-accent);
-    outline: none;
-}
-
-.font-size-container {
-    justify-self: stretch;
 }
 
 .sticker-btn {

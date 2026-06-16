@@ -143,13 +143,6 @@ function renderTags() {
     elExpand.classList.toggle('hide', !orderedTags.length)
 }
 
-// Show/hide the panel holding the tags that didn't fit the primary row
-function onToggleTagsPanel() {
-    document.querySelector('.tags-expanded').classList.toggle('open')
-}
-
-
-
 // sort tags by selected, count, alphabetically
 function orderTags() {
     const { page, filterBy } = gQueryParams
@@ -167,6 +160,11 @@ function orderTags() {
             if (a.score !== b.score) return b.score - a.score
             return a.keyword.localeCompare(b.keyword)
         })
+}
+
+// Show/hide the panel holding the tags that didn't fit the primary row
+function onToggleTagsPanel() {
+    document.querySelector('.tags-expanded').classList.toggle('open')
 }
 
 function addTagsResizeListener() {
