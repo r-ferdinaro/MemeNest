@@ -20,34 +20,33 @@ function onInit() {
 
 function renderPageContent() {
     const { page = 'gallery' } = gQueryParams
-    const pages = ['gallery', 'editor']
-    const activePage = ['gallery', 'memes'].includes(page) ? 'gallery' : page
+    const elMainContainer = document.querySelector('.main-content-container')
+    const elNavs = document.querySelectorAll('.main-nav a[data-uri]')
+    const isGallery = ['gallery', 'memes'].includes(page)
 
-    // hide/show sections, based on the selected page using the hide class
-    pages.forEach( page => document.querySelector(`.${page}`).classList.toggle('hide', page !== activePage))
+    // render the active page
+    elMainContainer.innerHTML = isGallery ? getGallerySection() : getEditorSection()
 
     // mark active nav link
-    document.querySelectorAll('.main-nav a[data-uri]').forEach(a => {
+    elNavs.forEach(a => {
         a.classList.toggle('nav-active', a.dataset.uri === page)
     })
 
     // show page's label in Mobile view
     const elPageLabel = document.querySelector('.current-page-label')
-    
+
     if (elPageLabel) elPageLabel.textContent = page.charAt(0).toUpperCase() + page.slice(1)
 
-    // render gallery content & tags based on gallery type
-    if (['gallery', 'memes'].includes(page)) {
+    if (isGallery) {
+        // render gallery content & tags based on gallery type
         document.querySelector('.gallery-content').innerHTML = getGalleryElements()
         renderTags()
         addTagsResizeListener()
+        removeResizeListeners()
     } else {
         removeTagsResizeListener()
+        onEditorInit()
     }
-
-    // Initialize Editor
-    if (page === 'editor') onEditorInit()
-    else removeResizeListeners()
 }
 
 // change page based on nav click
@@ -56,6 +55,7 @@ function onPageChange(ev) {
     onCloseMenu()
 
     gQueryParams.page = ev.target.dataset.uri
+    gQueryParams.filterBy = ''
     setQueryParams()
     renderPageContent()
 }
@@ -87,7 +87,10 @@ function OnSetSearchFilter(el) {
 }
 
 // toggle tag keyword in/out of the search bar
-function onTagFilter(el) {
+function onTagFilter(ev) {
+    ev.preventDefault()
+
+    const el = ev.currentTarget
     const elSearch = document.querySelector('.search-bar')
     const tagWords = el.getAttribute('value').toLowerCase().split(/\s+/)
     let searchWords = elSearch.value.toLowerCase().split(/\s+/).filter( word => word.length)
@@ -131,7 +134,12 @@ function renderTags() {
 
     // build the markup for a single tag
     function getTagElement(tag) {
-        return `<a href="#" value="${tag.keyword}" class="tag${tag.isSelected ? ' tag-selected' : ''}" onclick="onTagFilter(this)">${tag.keyword}</a>`
+        return `<a
+            href="#"
+            value="${tag.keyword}"
+            class="tag${tag.isSelected ? ' tag-selected' : ''}"
+            onclick="onTagFilter(event)"
+            >${tag.keyword}</a>`
     }
 
     const orderedTags = orderTags()
@@ -226,8 +234,8 @@ function onToggleMenu(el) {
 
 // Close nav/filter menu
 function onCloseMenu() {
-    document.querySelector('.main-nav').classList.remove('open')
-    document.querySelector('.tags-expanded').classList.remove('open')
-    document.querySelector('.main-screen').classList.remove('open')
+    // .tags-expanded only exists while the gallery page is mounted
+    document.querySelectorAll('.main-nav, .tags-expanded, .main-screen')
+        .forEach(el => el.classList.remove('open'))
 }
 

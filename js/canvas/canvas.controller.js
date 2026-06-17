@@ -144,7 +144,7 @@ function renderBrushProperties() {
     const elCanvasTools = document.querySelector('.canvas-tools')
     
     elCanvasTools.querySelector('.text-input').value = txt
-    elCanvasTools.querySelector('#text-font').value = font
+    elCanvasTools.querySelector('.text-font').value = font
     elCanvasTools.querySelector('.font-size-slider').value = fontSize
     elCanvasTools.querySelector('.font-size-value').innerText = fontSize
     elCanvasTools.querySelector('.stroke-color').value = strokeColor
@@ -167,7 +167,6 @@ function onDown(ev) {
 
         gOffsetPos = {x,y}
         gIsMouseDown = true
-        // grabbing a drawing - show the "grabbing" cursor
         gElCanvas.style.cursor = 'grabbing'
     }
 
@@ -176,7 +175,7 @@ function onDown(ev) {
     renderMeme()
 }
 
-// drag the selected drawing, or update the cursor when just hovering
+// drag drawing and store it's original positions
 function onMove(ev) {
     const pos = getEvPos(ev)
 
