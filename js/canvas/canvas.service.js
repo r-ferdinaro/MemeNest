@@ -207,12 +207,37 @@ function drawText(drawing) {
     gCtx.strokeText(txt, pos.x, pos.y)
 }
 
-// draw a sticker (emoji) into canvas
+// load image sticker image element to the sticker
+function getStickerImg(sticker) {
+    if (sticker.imgEl) return sticker.imgEl
+
+    const img = new Image()
+
+    img.onload = () => renderMeme()
+    img.src = sticker.img
+    sticker.imgEl = img
+    return img
+}
+
+// draw a sticker into canvas
 function drawSticker(drawing) {
     const { stickerId, size, pos } = drawing
     const sticker = getStickerById(stickerId)
-    
+
     if (!sticker) return
+
+    if (sticker.img) {
+        const img = getStickerImg(sticker)
+
+        if (!img.complete || !img.naturalWidth) return
+        
+        const width = size * (img.naturalWidth / img.naturalHeight)
+        const startX = pos.x - (width / 2)
+        const startY = pos.y - (size / 2)
+
+        gCtx.drawImage(img, startX, startY, width, size)
+        return
+    }
 
     // set sticker properties
     gCtx.font = `${size}px serif`
@@ -267,6 +292,14 @@ function measureDrawingWidth(drawing) {
 
     if (shape === 'sticker') {
         const sticker = getStickerById(drawing.stickerId)
+
+        // follow image sticker's aspect ratio
+        if (sticker && sticker.img) {
+            const img = getStickerImg(sticker)
+            const aspect = img.naturalWidth ? (img.naturalWidth / img.naturalHeight) : 1
+
+            return size * aspect
+        }
 
         gCtx.font = `${size}px serif`
         return gCtx.measureText(sticker ? sticker.emoji : '').width
