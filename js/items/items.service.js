@@ -8,7 +8,7 @@ let gImgs
 _createImages()
 _createMemes()
 
-// hardcoded sticker list — emoji stickers plus the image-based logo sticker
+// hardcoded sticker list
 const gStickers = [
   { id: 'st1', emoji: '😀' },
   { id: 'st2', emoji: '😎' },
@@ -140,7 +140,12 @@ function _updateMeme(imgUrl) {
 
 // Build a storable meme record from the current gMeme state
 function _createMeme(imgUrl) {
-    const { id: memeId, selectedImgId, drawings: memeDrawings } = gMeme
+    const {
+      id: memeId,
+      selectedImgId,
+      drawings: memeDrawings,
+      baseWidth
+    } = gMeme
 
     // reuse the existing meme id when editing, otherwise mint a new one
     const id = memeId || makeId()
@@ -154,6 +159,7 @@ function _createMeme(imgUrl) {
         selectedImgId,
         selectedDrawingIdx: null,
         keywords,
+        baseWidth,
         drawings
     }
 }

@@ -94,6 +94,10 @@ function renderItemToCanvas(imageObj) {
         gSelectedItem.elImg = img
 
         gElCanvas.height = (img.naturalHeight / img.naturalWidth) * gElCanvas.width
+
+        // a saved meme may open at a different canvas width than it was
+        // created at, so scale its drawings to the current dimensions
+        syncDrawingsToCanvas()
         renderMeme()
     }
     img.src = `${imageObj.url}`
@@ -134,7 +138,35 @@ function resizeCanvas() {
     } else {
         gElCanvas.height = elCanvasContainer.offsetWidth
     }
+
+    // keep drawings aligned with the canvas after its width changed
+    syncDrawingsToCanvas()
     renderMeme()
+}
+
+// scale drawings to stay align with change-able canvas width.
+function syncDrawingsToCanvas() {
+    const { width } = gElCanvas
+
+    if (!width) return
+
+    // check if baseWidth used for meme is NOT the same as its current width in editor
+    if (gMeme.baseWidth && gMeme.baseWidth !== width) {
+        // calculate the difference between original and current width
+        const widthDifference = (width / gMeme.baseWidth)
+
+        //Update drawing's positions & size based on the difference
+        gMeme.drawings.forEach(drawing => {
+            drawing.pos.x = drawing.pos.x * widthDifference
+            drawing.pos.y = drawing.pos.y * widthDifference
+
+            // constraint - keep drawing's size between the allowed int range (20-60)
+            const roundedDrawingSize = Math.round(drawing.size * widthDifference)
+            drawing.size = Math.min(60, Math.max(20, roundedDrawingSize))
+        })
+    }
+
+    gMeme.baseWidth = width
 }
 
 // Get event positions on Web & Mobile
