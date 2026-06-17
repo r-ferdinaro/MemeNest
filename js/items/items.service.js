@@ -192,7 +192,7 @@ function _createImages() {
             },
             {
               url: 'images/6.jpg',
-              keywords: ['aliens', 'history']
+              keywords: ['history']
             },
             {
               url: 'images/7.jpg',
@@ -200,7 +200,7 @@ function _createImages() {
             },
             {
               url: 'images/8.jpg',
-              keywords: ['willy wonka', 'smiling']
+              keywords: ['willy', 'wonka', 'smiling']
             },
             {
               url: 'images/9.jpg',
@@ -208,19 +208,19 @@ function _createImages() {
             },
             {
               url: 'images/10.jpg',
-              keywords: ['obama', 'laughing', 'close-up']
+              keywords: ['obama', 'laughing']
             },
             {
               url: 'images/11.jpg',
-              keywords: ['basketball', 'players', 'fight']
+              keywords: ['basketball', 'kiss', 'fight']
             },
             {
               url: 'images/12.jpg',
-              keywords: ['man', 'pointing', 'fingers']
+              keywords: ['blame', 'point', 'righteous']
             },
             {
               url: 'images/13.jpg',
-              keywords: ['leonardo dicaprio', 'drinking']
+              keywords: ['leonardo', 'dicaprio', 'drinking', 'success']
             },
             {
               url: 'images/14.jpg',
@@ -228,35 +228,35 @@ function _createImages() {
             },
             {
               url: 'images/15.jpg',
-              keywords: ['boromir', 'lord of the rings']
+              keywords: ['boromir', 'lord', 'rings']
             },
             {
               url: 'images/16.jpg',
-              keywords: ['picard', 'star trek', 'laughing']
+              keywords: ['picard', 'startrek', 'laughing']
             },
             {
               url: 'images/17.jpg',
-              keywords: ['putin', 'politics', 'speaking']
+              keywords: ['putin', 'politics', 'point']
             },
             {
               url: 'images/18.jpg',
-              keywords: ['toy story', 'buzz lightyear', 'everywhere']
+              keywords: ['toy', 'story', 'buzz', 'lightyear', 'everywhere']
             },
             {
               url: 'images/19.jpg',
-              keywords: ['guy', 'shocked']
+              keywords: ['scream', 'shocked']
             },
             {
               url: 'images/20.jpg',
-              keywords: ['trump', 'politics', 'pointing']
+              keywords: ['trump', 'politics', 'speaking']
             },
             {
               url: 'images/21.jpg',
-              keywords: ['aliens', 'history']
+              keywords: ['history']
             },
             {
               url: 'images/22.jpg',
-              keywords: ['dr evil', 'air quotes']
+              keywords: ['evil', 'quotes']
             },
             {
               url: 'images/23.jpg',
@@ -276,15 +276,15 @@ function _createImages() {
             },
             {
               url: 'images/27.jpg',
-              keywords: ['obama', 'laughing', 'close-up']
+              keywords: ['obama', 'laughing', 'closeup']
             },
             {
               url: 'images/28.jpg',
-              keywords: ['basketball', 'players', 'fight']
+              keywords: ['basketball', 'kiss', 'fight']
             },
             {
               url: 'images/29.jpg',
-              keywords: ['leonardo dicaprio', 'drinking']
+              keywords: ['leonardo', 'dicaprio', 'success']
             },
             {
               url: 'images/30.jpg',
@@ -292,7 +292,7 @@ function _createImages() {
             },
             {
               url: 'images/31.jpg',
-              keywords: ['boromir', 'lord of the rings']
+              keywords: ['boromir', 'lord', 'rings']
             },
             {
               url: 'images/32.jpg',
@@ -300,7 +300,7 @@ function _createImages() {
             },
             {
               url: 'images/33.jpg',
-              keywords: ['picard', 'star trek', 'laughing']
+              keywords: ['picard', 'star', 'trek', 'laughing']
             },
             {
               url: 'images/34.jpg',
@@ -308,7 +308,7 @@ function _createImages() {
             },
             {
               url: 'images/35.jpg',
-              keywords: ['toy story', 'buzz lightyear', 'everywhere']
+              keywords: ['toy', 'story', 'buzz', 'lightyear', 'everywhere']
             },
             {
               url: 'images/36.jpg',
