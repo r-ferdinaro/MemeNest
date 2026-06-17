@@ -8,20 +8,21 @@ let gImgs
 _createImages()
 _createMemes()
 
-// hardcoded emoji list
+// hardcoded sticker list — emoji stickers plus the image-based logo sticker
 const gStickers = [
-    { id: 'st1', emoji: '😀' },
-    { id: 'st2', emoji: '😎' },
-    { id: 'st3', emoji: '😂' },
-    { id: 'st4', emoji: '😍' },
-    { id: 'st5', emoji: '🔥' },
-    { id: 'st6', emoji: '👍' },
-    { id: 'st7', emoji: '🎉' },
-    { id: 'st8', emoji: '💯' },
-    { id: 'st9', emoji: '🚀' },
-    { id: 'st10', emoji: '🐶' },
-    { id: 'st11', emoji: '🐱' },
-    { id: 'st12', emoji: '💀' }
+  { id: 'st1', emoji: '😀' },
+  { id: 'st2', emoji: '😎' },
+  { id: 'st3', emoji: '😂' },
+  { id: 'st4', emoji: '😍' },
+  { id: 'st5', emoji: '🔥' },
+  { id: 'st6', emoji: '👍' },
+  { id: 'st7', emoji: '🎉' },
+  { id: 'st8', emoji: '💯' },
+  { id: 'st9', emoji: '🚀' },
+  { id: 'st10', emoji: '🐶' },
+  { id: 'st11', emoji: '🐱' },
+  { id: 'st12', emoji: '💀' },
+  { id: 'st-logo', img: 'stickers/logo.png' }
 ]
 
 function getStickers() {

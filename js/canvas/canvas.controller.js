@@ -132,9 +132,14 @@ function renderStickers() {
     let strHtml = ''
     const stickers = getStickers()
     
-    stickers.forEach( sticker =>
-        strHtml += `<button class="sticker-btn" data-id="${sticker.id}" onclick="onSelectSticker('${sticker.id}')">${sticker.emoji}</button>`
-    )
+    stickers.forEach( sticker => {
+        // use img element for image stickers
+        const content = sticker.img
+            ? `<img class="sticker-img" src="${sticker.img}" alt="logo sticker">`
+            : sticker.emoji
+        
+            strHtml += `<button class="sticker-btn" data-id="${sticker.id}" onclick="onSelectSticker('${sticker.id}')">${content}</button>`
+    })
 
     elContainer.innerHTML = strHtml
 }
